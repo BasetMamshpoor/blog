@@ -16,13 +16,13 @@ const UserProfile = () => {
     const userName = params.user
     const [user, setUser] = useState('')
     const [blogs, setBlogs] = useState([])
-    const isFollow = user && user.followers.find(u => u.user == myUsername)
-    const me = (myUsername == userName) ? true : false
+    const isFollow = user && user.followers.find(u => u.user === myUsername)
+    const me = (myUsername === userName) ? true : false
 
 
     useLayoutEffect(() => {
         if (!token) history.push('/login');
-    }, [token])
+    }, [token, history])
 
     useEffect(() => {
         const findUser = async () => {
@@ -44,7 +44,8 @@ const UserProfile = () => {
                 picture={i.picture}
                 title={i.title}
                 body={i.body}
-                created={i.created} />
+                created={i.created}
+                link={false} />
         )
     })
 
@@ -77,7 +78,6 @@ const UserProfile = () => {
                     <Navbar />
                     {params.follow === 'followers' && <Follow type={'Followers'} users={user.followers} />}
                     {params.follow === 'following' && <Follow type={'Following'} users={user.following} />}
-                    
 
                     <div className="row justify-content-between">
                         <div className="col-4">

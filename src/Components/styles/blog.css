@@ -21,6 +21,13 @@
 }
 .aboutBlog {
   padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.aboutBlog p {
+  margin: 0.5rem 0;
+  text-align: justify;
 }
 .blogImg img {
   width: 100%;
@@ -36,4 +43,17 @@
   outline: none;
   background: none;
   padding: 0.2rem 0.5rem;
+}
+.blogFooter {
+  direction: ltr !important;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.blogFooter a {
+  margin-right: 1rem;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: rgb(35, 118, 241);
 }

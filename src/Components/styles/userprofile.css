@@ -64,11 +64,11 @@
   margin: 1rem auto;
 }
 .bOOb button {
-    font-size: 17px;
-    border: none;
-    background: rgba(101, 140, 223, 0.678);
-    outline: none;
-    margin:  0 1rem;
-    padding: .3rem 1rem;
-    border-radius: 10px;
+  font-size: 17px;
+  border: none;
+  background: rgba(101, 140, 223, 0.678);
+  outline: none;
+  margin: 0 1rem;
+  padding: 0.3rem 1rem;
+  border-radius: 10px;
 }

@@ -5,23 +5,26 @@ import { Link } from 'react-router-dom';
 
 
 
-const Blog = ({ author, picture, title, body, created }) => {
+const Blog = ({ author, picture, title, body, created, link = true }) => {
     return (
         <div className='blog' >
             <div className='blogAuthor'>
                 <div className='authorImg'>
                     <img src={userlogo} alt='author' width='60px' />
                 </div>
-                <Link to={`/users/${author}`}>{author}</Link>
+                {link ? <Link to={`/users/${author}`}>{author}</Link> : <p>{author}</p>}
             </div>
             <div className='blogInfo'>
                 <div className='blogImg'>
                     {picture && <img src={picture} alt='blog' />}
                 </div>
-                <div className='aboutBlog' dir='auto'>
-                    <h4>{title}</h4>
-                    <p>{body}</p>
-                    <span>{created}</span>
+                <div className='aboutBlog'>
+                    <h4 dir='auto'>{title}</h4>
+                    <p dir='auto'>{body}</p>
+                    <div className="blogFooter">
+                        <span>{created}</span>
+                        <a href="">more...</a>
+                    </div>
                 </div>
             </div>
         </div>

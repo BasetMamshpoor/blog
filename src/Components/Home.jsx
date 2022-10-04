@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect, useEffect, useState } from 'react';
+import React, {  useLayoutEffect, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './styles/main.css'
 import Blog from './Blog';

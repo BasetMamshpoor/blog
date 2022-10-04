@@ -2,6 +2,8 @@ import React, { useLayoutEffect } from 'react';
 import { useState } from 'react';
 import './styles/addBlog.css'
 import SendPostData from '../axios/SendPostData'
+import { ToastContainer } from 'react-toastify';
+import notify from '../Auth/toast'
 import { useHistory } from 'react-router-dom';
 import Navbar from './Navbar';
 
@@ -57,7 +59,7 @@ const AddBlog = () => {
         } else {
             await SendPostData(addPost, token)
                 .then(() => history.goBack())
-            // .catch(() => console.log('change the title!'))
+                .catch(() => notify('error', 'change the title!'))
         }
     }
     const handleFocus = (e) => {
@@ -101,7 +103,9 @@ const AddBlog = () => {
                         </form>
                     </div>
                 </div>
+
             }
+            <ToastContainer />
         </>
     );
 };
