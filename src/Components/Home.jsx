@@ -1,4 +1,4 @@
-import React, {  useLayoutEffect, useEffect, useState } from 'react';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './styles/main.css'
 import Blog from './Blog';
@@ -16,7 +16,7 @@ const Home = () => {
     const [blogs, setBlogs] = useState([])
     useEffect(() => {
         const get = async () => {
-            setPosts(await getPosts(token))
+            setPosts(await getPosts())
         }
         get();
     }, [history])
@@ -49,6 +49,7 @@ const Home = () => {
         return (
             <Blog
                 key={i.id}
+                id={i.id}
                 author={i.author}
                 picture={i.picture}
                 title={i.title}

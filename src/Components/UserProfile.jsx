@@ -40,6 +40,7 @@ const UserProfile = () => {
         return (
             <Blog
                 key={i.id}
+                id={i.id}
                 author={i.author}
                 picture={i.picture}
                 title={i.title}

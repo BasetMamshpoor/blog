@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const Blog = ({ author, picture, title, body, created, link = true }) => {
+const Blog = ({ id, author, picture, title, body, created, link = true }) => {
     return (
         <div className='blog' >
             <div className='blogAuthor'>
@@ -22,13 +22,12 @@ const Blog = ({ author, picture, title, body, created, link = true }) => {
                     <h4 dir='auto'>{title}</h4>
                     <p dir='auto'>{body}</p>
                     <div className="blogFooter">
-                        <span>{created}</span>
-                        <a href="">more...</a>
+                        {/* <span>{created.slice(0, 4) + ' / ' + created.slice(4, 6) + ' / ' + created.slice(6, 8)}</span> */}
+                        <Link to={`/posts/${id}`}>more...</Link>
                     </div>
                 </div>
             </div>
         </div>
-
     );
 };
 

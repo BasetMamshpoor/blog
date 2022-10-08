@@ -1,43 +1,35 @@
-.blog {
+.post {
   display: flex;
   flex-direction: column;
   border: 3px solid rgb(136, 164, 240);
   border-radius: 8px;
   margin-bottom: 3rem;
 }
-.blogAuthor {
+.postAuthor {
   display: flex;
   align-items: center;
   border-bottom: 1px solid black;
 }
-.blogAuthor a {
+.postAuthor a {
   color: #000;
   text-decoration: none;
   margin-left: 1rem;
   margin-bottom: 0;
 }
-.blogImg {
+.postImg {
   width: 100%;
 }
-.aboutBlog {
+.aboutPost {
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.aboutBlog h4 {
-  text-align: justify;
-
-}
-.aboutBlog p {
+.aboutPost p {
   margin: 0.5rem 0;
   text-align: justify;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
-.blogImg img {
+.postImg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -52,16 +44,53 @@
   background: none;
   padding: 0.2rem 0.5rem;
 }
-.blogFooter {
+.postFooter {
   direction: ltr !important;
-  display: flex;
   width: 100%;
-  justify-content: space-between;
-  align-items: center;
 }
-.blogFooter a {
+.postFooter a {
   margin-right: 1rem;
   font-size: 1.2rem;
   font-style: italic;
   color: rgb(35, 118, 241);
+}
+.postComment {
+  padding: 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.postComment h5 {
+  text-align: center;
+}
+.commentForm {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.comment {
+  padding: 1rem;
+  border: 1px solid #000;
+  margin-bottom: 1rem;
+}
+.commentForm input {
+  outline: none;
+  background: #f1f1f1;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  width: 20rem;
+}
+.commentForm button {
+  border: none;
+  background: #fff;
+  font-size: 1.1rem;
+  margin: 0 1rem;
+  padding: 0.5rem;
+}
+.headerC p {
+  margin-bottom: 0.5rem;
+  color: rgb(134, 134, 134);
+}
+.bodyC p {
+  text-align: justify;
 }
