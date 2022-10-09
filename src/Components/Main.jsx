@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './styles/main.css'
 import Blog from './Blog';
 import Navbar from './Navbar';
 import getPosts from '../axios/getPosts';
-import { useState } from 'react';
-import axios from 'axios';
 import loading from './images/200.gif'
 
 
@@ -26,18 +24,15 @@ const Main = () => {
     }, [history])
 
     useEffect(() => {
-        console.log(1);
         if (isFetching && Posts && !end) {
             fetchMoreListItems();
         }
     }, [isFetching, Posts]);
 
     async function fetchMoreListItems() {
-        await axios.get(`/posts/post/?offset=${Posts.length}`)
-            .then(res => {
-                setPosts(prev => prev.concat(res.data.results))
-                if (res.data.next == null) setEnd(true)
-            })
+        const post = await getPosts(Posts.length)
+        await setPosts(prev => prev.concat(post.results))
+        if (await post.next === null) setEnd(true)
         await setIsFetching(false);
     }
 

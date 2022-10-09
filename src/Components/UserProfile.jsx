@@ -46,7 +46,7 @@ const UserProfile = () => {
                 title={i.title}
                 body={i.body}
                 created={i.created}
-                link={false} />
+                prof={true} />
         )
     })
 
@@ -123,8 +123,7 @@ const UserProfile = () => {
                             </div>
                         </div>
                         <div className="col-8">
-                            {/* {Blogs.length ? Blogs : <p>no post</p>} */}
-                            {Blogs}
+                            {Blogs.length ? Blogs : <p>no post</p>}
                         </div>
                     </div>
                 </div>

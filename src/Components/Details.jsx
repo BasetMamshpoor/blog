@@ -1,12 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import userlogo from './images/Ei-user.svg'
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import getPosts from '../axios/getPosts';
 import './styles/details.css'
 import axios from 'axios';
+import Navbar from './Navbar';
 
 const Details = () => {
     const token = localStorage.getItem('token')
@@ -16,7 +15,7 @@ const Details = () => {
     const [render, setRender] = useState(0)
     useEffect(() => {
         const get = async () => {
-            const post = await getPosts(id)
+            const post = await getPosts(null, id)
             setPost(post)
         }
         get()
@@ -52,7 +51,8 @@ const Details = () => {
     return (
         <>
             {post &&
-                <div className='details pt-5'>
+                <div className='details'>
+                    <Navbar />
                     <div className="container">
                         <div className='post' >
                             <div className='postAuthor'>
