@@ -8,7 +8,61 @@
 .blogAuthor {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid black;
+}
+.phWxoR {
+  position: relative;
+  height: 100%;
+}
+.phWxoR label {
+  padding: 0 1rem;
+}
+.XsPzoY {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  cursor: pointer;
+}
+.XsPzoY span {
+  width: 4px;
+  border-radius: 10px;
+  height: 4px;
+  background: #000;
+}
+.XsPzoY span:first-child {
+  margin-bottom: 5px;
+}
+.XsPzoY span:last-child {
+  margin-top: 5px;
+}
+.phWxoR input[type="checkbox"]:checked ~ .jWcoI {
+  display: block;
+}
+.jWcoI {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  border: 1px solid blue;
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 0.5rem;
+}
+.jWcoI ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.jWcoI ul li {
+  font-size: 0.8rem;
+  margin: 0.3rem 0;
+  cursor: pointer;
 }
 .blogAuthor a {
   color: #000;
@@ -27,7 +81,6 @@
 }
 .aboutBlog h4 {
   text-align: justify;
-
 }
 .aboutBlog p {
   margin: 0.5rem 0;

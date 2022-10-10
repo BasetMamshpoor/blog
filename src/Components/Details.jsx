@@ -30,6 +30,10 @@ const Details = () => {
                 <div className="bodyC">
                     <p>{c.body}</p>
                 </div>
+                <div className="csxop">
+                    <span className='me-3'>{c.created.slice(0, 4) + ' / ' + c.created.slice(4, 6) + ' / ' + c.created.slice(6, 8)}</span>
+                    <span>{c.created.slice(8, 10) + ' : ' + c.created.slice(10, 12)}</span>
+                </div>
             </div>
         )
     })

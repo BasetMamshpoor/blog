@@ -5,6 +5,7 @@ import Blog from './Blog';
 import newUser from '../axios/newUser';
 import Navbar from './Navbar';
 import getPosts from '../axios/getPosts';
+import axios from 'axios';
 
 
 
@@ -12,49 +13,38 @@ const Home = () => {
     const token = localStorage.getItem('token')
     const username = localStorage.getItem('username')
     const history = useHistory()
-    const [Posts, setPosts] = useState()
+    const [user, setUser] = useState()
     const [blogs, setBlogs] = useState([])
-    useEffect(() => {
-        const get = async () => {
-            setPosts(await getPosts())
-        }
-        get();
-    }, [history])
+
     useEffect(() => {
         const SetHome = async () => {
-            const user = await newUser(username, token)
-            if (user !== null && Posts) {
-                const myPost = filterByReference(Posts, user.following)
-                setBlogs(user.post_set.concat(myPost))
-            }
+            const thisUser = await newUser(username, token)
+            await setUser(thisUser)
+            await setBlogs(thisUser.post_set)
         }
         SetHome();
-    }, [Posts])
+    }, [])
+
+    useEffect(() => {
+        if (user) {
+            user.following.map(async f => {
+                const followingPost = await axios.get(`accounts/users/${f.following_user_id}`)
+                    .then(res => res.data.post_set)
+                await setBlogs(prev => prev.concat(followingPost))
+            })
+        }
+    }, [user])
+
 
     useLayoutEffect(() => {
         if (!token) history.push('/login')
     }, [token])
 
-    const filterByReference = (arr1, arr2) => {
-        let result = [];
-        result = arr1.filter(el => {
-            return arr2.find(element => {
-                return element.following_user_id === el.author;
-            });
-        });
-        return result;
-    }
-
-    const Blogs = blogs.length > 0 && blogs.map(i => {
+    const Blogs = blogs.length > 0 && blogs.map(item => {
         return (
             <Blog
-                key={i.id}
-                id={i.id}
-                author={i.author}
-                picture={i.picture}
-                title={i.title}
-                body={i.body}
-                created={i.created} />
+                key={item.id}
+                data={item} />
         )
     })
 

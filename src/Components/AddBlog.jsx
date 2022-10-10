@@ -57,6 +57,7 @@ const AddBlog = () => {
         if (Object.keys(touch).length < 1) {
             setTouch({ title: true, body: true })
         } else {
+            console.log(addPost);
             await SendPostData(addPost, token)
                 .then(() => history.goBack())
                 .catch(() => notify('error', 'change the title!'))
@@ -70,7 +71,7 @@ const AddBlog = () => {
             {
                 <div className='wQio'>
                     <div className="tab-pane" id="post-object-form">
-                        <form encType='multipart/form-data' className="form-horizontal">
+                        <form encType='multipart/form-data' className="form-horizontal" onSubmit={handleSendData}>
                             <fieldset>
                                 <div className="form-group ">
                                     <label className="control-label">Title</label>
@@ -96,7 +97,7 @@ const AddBlog = () => {
                                     </select>
                                 </div>
                                 <div className="form-actions">
-                                    <button type='submit' className="js-tooltip" onClick={handleSendData}>POST</button>
+                                    <button type='submit' className="js-tooltip">POST</button>
                                     <button type="button" className='closeModal' onClick={() => history.goBack()}>CANCLE</button>
                                 </div>
                             </fieldset>

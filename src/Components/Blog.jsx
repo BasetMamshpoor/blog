@@ -5,14 +5,32 @@ import { Link } from 'react-router-dom';
 
 
 
-const Blog = ({ id, author, picture, title, body, created, prof = false }) => {
+const Blog = ({ data, handleDeletePost, handleEditPost, link = true }) => {
+    const { id, author, picture, title, body, created } = data
     return (
         <div className='blog' >
             <div className='blogAuthor'>
-                <div className='authorImg'>
-                    <img src={userlogo} alt='author' width='60px' />
+                <div className='d-flex align-items-center'>
+                    <div className='authorImg'>
+                        <img src={userlogo} alt='author' width='60px' />
+                    </div>
+                    {link ? <Link to={`/users/${author}`}>{author}</Link> : <p>{author}</p>}
                 </div>
-                {!prof ? <Link to={`/users/${author}`}>{author}</Link> : <p>{author}</p>}
+                {handleDeletePost && <div className="phWxoR">
+                    <input type="checkbox" id={`optionBlog${id}`} hidden />
+                    <label htmlFor={`optionBlog${id}`} className="XsPzoY">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label>
+                    <div className="jWcoI">
+                        <ul>
+                            <li onClick={() => handleDeletePost(id)}>DELETE</li>
+                            <li onClick={() => handleEditPost(id)} hidden>EDIT</li>
+                        </ul>
+                    </div>
+                </div>
+                }
             </div>
             <div className='blogInfo'>
                 <div className='blogImg'>

@@ -32,3 +32,7 @@
   margin: 0.5rem 0;
   color: rgb(223, 50, 107);
 }
+textarea[class="form-control"] {
+  height: auto;
+  max-height: 20rem;
+}

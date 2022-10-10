@@ -36,18 +36,48 @@ const UserProfile = () => {
         findUser();
     }, [history, params])
 
-    const Blogs = blogs && blogs.map(i => {
-        return (
-            <Blog
-                key={i.id}
-                id={i.id}
-                author={i.author}
-                picture={i.picture}
-                title={i.title}
-                body={i.body}
-                created={i.created}
-                prof={true} />
-        )
+
+    const handleDeletePost = async (id) => {
+        await axios.delete(`/posts/post/${id}`, { headers: { 'Authorization': `Token ${token}` } })
+            .then(() => setBlogs(blogs.filter(b => b.id !== id)))
+    }
+    const handleEditPost = async (id) => {
+        // await axios.put(`posts/post/${id}`, {
+        //     "title": "30",
+        //     "body": "body",
+        //     "picture": null,
+        //     "status": "PU"
+        // },
+        //     {
+        //         headers:
+        //         {
+        //             'Content-Type': 'multipart/form-data',
+        //             'Authorization': `Token ${token}`
+        //         }
+        //     })
+        //     .then(res => console.log(res))
+    }
+
+    const Blogs = blogs && blogs.map(item => {
+        if (!me) {
+            return (
+                <Blog
+                    key={item.id}
+                    data={item}
+                    link={false}
+                />
+            )
+        } else {
+            return (
+                <Blog
+                    key={item.id}
+                    data={item}
+                    handleDeletePost={handleDeletePost}
+                    handleEditPost={handleEditPost}
+                    link={false}
+                />
+            )
+        }
     })
 
     const handleFollow = async () => {

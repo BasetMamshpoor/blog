@@ -16,7 +16,7 @@ async function getPosts(offset = null, id = 0) {
     } else {
 
         const get = await axios.get('/posts/post/')
-            .then(res => res.data.results)
+            .then(res => res.data)
             .catch(err => err.response.data)
         return get;
     }

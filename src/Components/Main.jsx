@@ -16,7 +16,8 @@ const Main = () => {
     useEffect(() => {
         const get = async () => {
             const post = await getPosts();
-            setPosts(post)
+            setPosts(post.results)
+            if (post.next === null) setEnd(true)
         }
         get()
         window.addEventListener('scroll', handleScroll)
@@ -42,16 +43,11 @@ const Main = () => {
         }
     }
 
-    const Blogs = Posts && Posts.map(i => {
+    const Blogs = Posts && Posts.map(item => {
         return (
             <Blog
-                key={i.id}
-                id={i.id}
-                author={i.author}
-                picture={i.picture}
-                title={i.title}
-                body={i.body}
-                created={i.created} />
+                key={item.id}
+                data={item} />
         )
     })
 
