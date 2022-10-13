@@ -1,14 +1,8 @@
 import React from 'react';
-import { useLayoutEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './styles/navbar.css'
 const Navbar = () => {
     const username = localStorage.getItem('username')
-    const token = localStorage.getItem('token')
-    const history = useHistory();
-    useLayoutEffect(() => {
-        if (!token) history.push('/login')
-    }, [token])
     return (
         <>
             <section className="XaOp py-5">
