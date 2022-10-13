@@ -4,7 +4,6 @@ import './styles/main.css'
 import Blog from './Blog';
 import newUser from '../axios/newUser';
 import Navbar from './Navbar';
-import getPosts from '../axios/getPosts';
 import axios from 'axios';
 
 
