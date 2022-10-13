@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import userlogo from './images/Ei-user.svg'
 import { Link, useParams } from 'react-router-dom';
 import getPosts from '../axios/getPosts';
+import { ToastContainer } from 'react-toastify';
+import notify from '../Auth/toast'
 import './styles/details.css'
 import axios from 'axios';
 import Navbar from './Navbar';
@@ -39,7 +41,8 @@ const Details = () => {
     })
     const handleComment = async (e) => {
         e.preventDefault()
-        if (comment.trim()) {
+        if (!token) notify('error', 'Please Login')
+        else if (comment.trim()) {
             await axios.post('posts/comment/', { 'body': comment, 'post': post.id }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,6 +95,7 @@ const Details = () => {
                             </div>
                         </div>
                     </div>
+                    <ToastContainer />
                 </div>
             }
         </>
