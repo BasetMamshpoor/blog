@@ -6,7 +6,6 @@ import Follow from './Follow'
 import userlogo from './images/Ei-user.svg'
 import './styles/userprofile.css'
 import newUser from '../axios/newUser';
-import Navbar from './Navbar';
 
 const UserProfile = () => {
     const token = localStorage.getItem('token')
@@ -16,6 +15,8 @@ const UserProfile = () => {
     const userName = params.user
     const [user, setUser] = useState('')
     const [blogs, setBlogs] = useState([])
+    const [isFetching, setIsFetching] = useState(false)
+    const [end, setEnd] = useState(false)
     const isFollow = user && user.followers.find(u => u.user === myUsername)
     const me = (myUsername === userName) ? true : false
 
@@ -34,8 +35,28 @@ const UserProfile = () => {
             }
         }
         findUser();
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll);
     }, [history, params])
 
+    useEffect(() => {
+        if (isFetching && blogs && !end) {
+            fetchMoreListItems();
+        }
+    }, [isFetching, blogs]);
+
+    function handleScroll() {
+        if ((document.scrollingElement.scrollHeight - window.innerHeight) <= (document.documentElement.scrollTop.toFixed())) {
+            setIsFetching(true);
+        }
+    }
+
+    async function fetchMoreListItems() {
+        const user = await newUser(userName, token, Math.round(blogs.length / 5) + 1)
+        if (await user.post_set.length < 1) setEnd(true)
+        await setBlogs(prev => prev.concat(user.post_set))
+        await setIsFetching(false)
+    }
 
     const handleDeletePost = async (id) => {
         await axios.delete(`/posts/post/${id}`, { headers: { 'Authorization': `Token ${token}` } })
@@ -102,11 +123,11 @@ const UserProfile = () => {
         localStorage.removeItem('token');
         history.push('/login')
     }
+
     return (
         <>
             {
                 <div className='container'>
-                    <Navbar />
                     {params.follow === 'followers' && <Follow type={'Followers'} users={user.followers} />}
                     {params.follow === 'following' && <Follow type={'Following'} users={user.following} />}
 

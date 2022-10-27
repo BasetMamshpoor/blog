@@ -5,7 +5,6 @@ import SendPostData from '../axios/SendPostData'
 import { ToastContainer } from 'react-toastify';
 import notify from '../Auth/toast'
 import { useHistory } from 'react-router-dom';
-import Navbar from './Navbar';
 
 
 const validate = (obj) => {
@@ -25,7 +24,7 @@ const validate = (obj) => {
 
 
 const AddBlog = () => {
-    const [addPost, setAddPost] = useState({ title: '', body: '', picture: null, status: 'PU' })
+    const [addPost, setAddPost] = useState({ title: '', body: '', uplouded_images: [], status: 'PU' })
     const error = validate(addPost)
     const [touch, setTouch] = useState({ title: false, body: false })
     const token = localStorage.getItem('token')
@@ -45,10 +44,11 @@ const AddBlog = () => {
 
     }
     const handleUpload = event => {
+        console.log(event.target.files[0]);
         setAddPost(prev => {
             return {
                 ...prev,
-                picture: event.target.files[0]
+                uplouded_images: [event.target.files[0]]
             }
         })
     }
@@ -57,9 +57,8 @@ const AddBlog = () => {
         if (Object.keys(touch).length < 1) {
             setTouch({ title: true, body: true })
         } else {
-            console.log(addPost);
             await SendPostData(addPost, token)
-                .then(() => history.goBack())
+                .then(() => history.push('/'))
                 .catch(() => notify('error', 'change the title!'))
         }
     }
@@ -67,7 +66,7 @@ const AddBlog = () => {
         setTouch(prev => { return { ...prev, [e.target.name]: true } })
     }
     return (
-        <><Navbar />
+        <>
             {
                 <div className='wQio'>
                     <div className="tab-pane" id="post-object-form">
@@ -84,9 +83,9 @@ const AddBlog = () => {
                                     {touch.body && error.body && <p>{error.body}</p>}
                                 </div>
                                 <div className="form-group">
-                                    <label className="control-label">Picture</label>
+                                    <label className="control-label">images</label>
                                     <br />
-                                    <input name="picture" type="file" onChange={handleUpload} accept='image/jpeg, image/jpg, image/png, image/gif' />
+                                    <input name="uplouded_images" type="file" onChange={handleUpload} accept='image/jpeg, image/jpg, image/png, image/gif, image/webp' />
                                 </div>
                                 <div className="form-group">
                                     <label className="control-label ">Status</label>
