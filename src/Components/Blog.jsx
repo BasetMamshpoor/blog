@@ -2,11 +2,13 @@ import React, { useEffect } from 'react';
 import './styles/blog.css';
 import userlogo from './images/Ei-user.svg'
 import { Link } from 'react-router-dom';
+import { useRef } from 'react';
 
 
 
 const Blog = ({ data, handleDeletePost, handleEditPost, from, link = true }) => {
     const { id, author, images, title, body, created } = data
+    const slider = useRef();
 
     const pictures = images.length > 1 && images.map(img => {
         return (
@@ -17,9 +19,8 @@ const Blog = ({ data, handleDeletePost, handleEditPost, from, link = true }) => 
     })
 
     useEffect(() => {
-        const slider = document.querySelectorAll('.blogImg');
-        slider.forEach(el => {
-            const buttons = el.children[1].children
+        if (slider.current !== undefined) {
+            const buttons = slider.current.children[1].children
             let slideIndex = 1
             showSlides(slideIndex)
             buttons[0].addEventListener('click', () => {
@@ -32,7 +33,7 @@ const Blog = ({ data, handleDeletePost, handleEditPost, from, link = true }) => 
                 showSlides(slideIndex += n)
             }
             function showSlides(n) {
-                const num = el.children[0].children
+                const num = slider.current.children[0].children
                 if (n > num.length) slideIndex = num.length
                 if (slideIndex == num.length) buttons[1].style.display = 'none'
                 else buttons[1].style.display = 'block'
@@ -44,7 +45,7 @@ const Blog = ({ data, handleDeletePost, handleEditPost, from, link = true }) => 
                 }
                 num[slideIndex - 1].className += ' showSlide'
             }
-        });
+        };
     }, [])
 
 
@@ -58,7 +59,8 @@ const Blog = ({ data, handleDeletePost, handleEditPost, from, link = true }) => 
                         </div>
                         {link ? <Link to={`/users/${author}`}>{author}</Link> : <p>{author}</p>}
                     </div>
-                    {handleDeletePost &&
+                    {
+                        handleDeletePost &&
                         <div className="phWxoR">
                             <input type="checkbox" id={`optionBlog${id}`} hidden />
                             <label htmlFor={`optionBlog${id}`} className="XsPzoY">
@@ -77,7 +79,7 @@ const Blog = ({ data, handleDeletePost, handleEditPost, from, link = true }) => 
                 </div>
                 <div className='blogInfo '>
                     {images.length > 1 &&
-                        <div className='blogImg'>
+                        <div className='blogImg' ref={slider}>
                             <div className="slidesPo">
                                 {pictures}
                             </div>

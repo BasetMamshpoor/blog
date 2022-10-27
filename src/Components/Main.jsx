@@ -4,6 +4,7 @@ import './styles/main.css'
 import Blog from './Blog';
 import loading from './images/200.gif'
 import fetchData from '../axios/getPosts'
+import axios from 'axios'
 
 const Main = ({ type }) => {
     const token = localStorage.getItem('token')

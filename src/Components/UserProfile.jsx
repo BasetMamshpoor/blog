@@ -62,6 +62,7 @@ const UserProfile = () => {
         await axios.delete(`/posts/post/${id}`, { headers: { 'Authorization': `Token ${token}` } })
             .then(() => setBlogs(blogs.filter(b => b.id !== id)))
     }
+    
     const handleEditPost = async (id) => {
         // await axios.put(`posts/post/${id}`, {
         //     "title": "30",
