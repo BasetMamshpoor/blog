@@ -24,7 +24,7 @@ const validate = (obj) => {
 
 
 const AddBlog = () => {
-    const [addPost, setAddPost] = useState({ title: '', body: '', uplouded_images: [], status: 'PU' })
+    const [addPost, setAddPost] = useState({ title: '', body: '', uplouded_images: {}, status: 'PU' })
     const error = validate(addPost)
     const [touch, setTouch] = useState({ title: false, body: false })
     const token = localStorage.getItem('token')
@@ -44,17 +44,17 @@ const AddBlog = () => {
 
     }
     const handleUpload = event => {
-        console.log(event.target.files[0]);
         setAddPost(prev => {
+            // prev.uplouded_images.push(event.target.files[0])
             return {
                 ...prev,
-                uplouded_images: [event.target.files[0]]
+                uplouded_images: event.target.files[0]
             }
         })
     }
     const handleSendData = async (e) => {
         e.preventDefault();
-        if (Object.keys(touch).length < 1) {
+        if (Object.keys(error).length > 0) {
             setTouch({ title: true, body: true })
         } else {
             await SendPostData(addPost, token)
@@ -84,6 +84,8 @@ const AddBlog = () => {
                                 </div>
                                 <div className="form-group">
                                     <label className="control-label">images</label>
+                                    <br />
+                                    <input name="uplouded_images" type="file" onChange={handleUpload} accept='image/jpeg, image/jpg, image/png, image/gif, image/webp' />
                                     <br />
                                     <input name="uplouded_images" type="file" onChange={handleUpload} accept='image/jpeg, image/jpg, image/png, image/gif, image/webp' />
                                 </div>

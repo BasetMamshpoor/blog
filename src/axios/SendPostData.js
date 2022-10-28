@@ -1,12 +1,11 @@
 import axios from "axios";
 
 async function SendPostData(data, token) {
-
-    const { title, body, picture, status } = data
+    const { title, body, uplouded_images, status } = data
     const post = await axios.post('/posts/post/', {
         "title": title,
         "body": body,
-        "picture": picture,
+        "uplouded_images": uplouded_images,
         "status": status
     },
         {

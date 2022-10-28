@@ -4,7 +4,6 @@ import './styles/main.css'
 import Blog from './Blog';
 import loading from './images/200.gif'
 import fetchData from '../axios/getPosts'
-import axios from 'axios'
 
 const Main = ({ type }) => {
     const token = localStorage.getItem('token')
@@ -15,7 +14,6 @@ const Main = ({ type }) => {
     useLayoutEffect(() => {
         if (type === 'post' && !token) history.push('/login')
     }, [token])
-
 
     useEffect(() => {
         const get = async () => {

@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './styles/blog.css';
 import userlogo from './images/Ei-user.svg'
 import { Link } from 'react-router-dom';
-import { useRef } from 'react';
 
 
 

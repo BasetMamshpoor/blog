@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import userlogo from './images/Ei-user.svg'
-import notify from '../Auth/toast'
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Comment from './Comment.jsx'
 
-const DetailBlog = ({ post, setRender, token }) => {
-    const [comment, setComment] = useState('')
+const DetailBlog = ({ post, token }) => {
     const slider = useRef()
+
     useEffect(() => {
         if (slider.current !== undefined) {
             const buttons = slider.current.children[1].children
@@ -37,39 +36,6 @@ const DetailBlog = ({ post, setRender, token }) => {
         }
     }, [slider])
 
-
-    const comments = post && post.comments.map(c => {
-        return (
-            <div className="comment" key={c.id}>
-                <div className="headerC">
-                    <p>{c.owner}</p>
-                </div>
-                <div className="bodyC">
-                    <p>{c.body}</p>
-                </div>
-                <div className="csxop">
-                    <span className='me-3'>{c.created.slice(0, 4) + ' / ' + c.created.slice(4, 6) + ' / ' + c.created.slice(6, 8)}</span>
-                    <span>{c.created.slice(8, 10) + ' : ' + c.created.slice(10, 12)}</span>
-                </div>
-            </div>
-        )
-    })
-    const handleComment = async (e) => {
-        e.preventDefault()
-        if (!token) notify('error', 'Please Login')
-        else if (comment.trim()) {
-            await axios.post('posts/comment/', { 'body': comment, 'post': post.id }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Token ${token}`
-                }
-            })
-                .then(() => {
-                    setRender(Math.random())
-                    setComment('')
-                })
-        }
-    }
     const pictures = post && post.images.length > 1 && post.images.map(img => {
         return (
             <div className='mySlide' key={img.id}>
@@ -115,18 +81,7 @@ const DetailBlog = ({ post, setRender, token }) => {
                         </div>
                     </div>
                 </div>
-                <div className="postComment">
-                    <h5>comments</h5>
-                    <div className="commentForm">
-                        <form encType='multipart/form-data'>
-                            <input type="text" value={comment} onChange={(e) => setComment(e.target.value)} />
-                            <button onClick={handleComment}>Send</button>
-                        </form>
-                    </div>
-                    <div className="commentList">
-                        {comments}
-                    </div>
-                </div>
+                <Comment token={token} id={post.id}  />
             </div>
         </>
     );

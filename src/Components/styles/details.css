@@ -137,3 +137,12 @@
   font-size: 12px;
   font-weight: 800;
 }
+.loadingComment img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.loadingComment {
+  margin: 0 auto;
+  width: 100px;
+}
