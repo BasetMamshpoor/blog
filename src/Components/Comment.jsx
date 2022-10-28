@@ -29,7 +29,7 @@ const Comment = ({ token, id }) => {
         const get = async () => {
             const comment = await getComment(null, id)
             await setComments(comment.results)
-            if (await comment.next === null) setEnd(true)
+            if (await comment.next === null) setEnd(!end)
         }
         get()
         window.addEventListener('scroll', handleScroll)

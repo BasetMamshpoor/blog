@@ -12,7 +12,7 @@ const Navbar = () => {
 
     return (
         <>
-            <section className="XaOp py-5">
+            <section className="XaOp py-4 sticky-top bg-white">
                 <div className="container">
                     <nav className='navBar'>
                         <ul className="d-flex ">
