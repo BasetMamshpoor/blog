@@ -20,11 +20,11 @@ const Main = ({ type }) => {
             if (token) {
                 const post = await fetchData(token, type);
                 setPosts(post.results)
-                if (post.next === null) setEnd(true)
+                if (post.next === null) setEnd(!end)
             } else {
                 const post = await fetchData(null, type);
                 setPosts(post.results)
-                if (post.next === null) setEnd(true)
+                if (post.next === null) setEnd(!end)
             }
         }
         get()

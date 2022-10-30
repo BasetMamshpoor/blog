@@ -24,7 +24,7 @@ const validate = (obj) => {
 
 
 const AddBlog = () => {
-    const [addPost, setAddPost] = useState({ title: '', body: '', uplouded_images: {}, status: 'PU' })
+    const [addPost, setAddPost] = useState({ title: '', body: '', uplouded_images: [], status: 'PU' })
     const error = validate(addPost)
     const [touch, setTouch] = useState({ title: false, body: false })
     const token = localStorage.getItem('token')
@@ -32,7 +32,7 @@ const AddBlog = () => {
 
     useLayoutEffect(() => {
         if (!token) history.push('/login')
-    }, [token])
+    }, [token, history])
 
     const handleChange = event => {
         setAddPost(prev => {
@@ -43,12 +43,11 @@ const AddBlog = () => {
         })
 
     }
-    const handleUpload = event => {
+    const handleUpload = ({ target }) => {
         setAddPost(prev => {
-            // prev.uplouded_images.push(event.target.files[0])
             return {
                 ...prev,
-                uplouded_images: event.target.files[0]
+                uplouded_images: [...prev.uplouded_images, ...target.files]
             }
         })
     }
@@ -85,9 +84,7 @@ const AddBlog = () => {
                                 <div className="form-group">
                                     <label className="control-label">images</label>
                                     <br />
-                                    <input name="uplouded_images" type="file" onChange={handleUpload} accept='image/jpeg, image/jpg, image/png, image/gif, image/webp' />
-                                    <br />
-                                    <input name="uplouded_images" type="file" onChange={handleUpload} accept='image/jpeg, image/jpg, image/png, image/gif, image/webp' />
+                                    <input name="uplouded_images" multiple type="file" onChange={handleUpload} accept='image/jpeg, image/jpg, image/png, image/gif, image/webp' />
                                 </div>
                                 <div className="form-group">
                                     <label className="control-label ">Status</label>

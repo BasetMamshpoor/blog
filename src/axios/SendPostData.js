@@ -2,19 +2,23 @@ import axios from "axios";
 
 async function SendPostData(data, token) {
     const { title, body, uplouded_images, status } = data
-    const post = await axios.post('/posts/post/', {
-        "title": title,
-        "body": body,
-        "uplouded_images": uplouded_images,
-        "status": status
-    },
+    
+    let formdata = new FormData();
+    formdata.append("title", title);
+    formdata.append("body", body);
+    formdata.append("status", status);
+    
+    for (const img of uplouded_images) {
+        formdata.append("uplouded_images", img, "[PROXY]");
+    }
+
+    const post = await axios.post('/posts/post/', formdata, {
+        headers:
         {
-            headers:
-            {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Token ${token}`
-            }
-        })
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Token ${token}`
+        }
+    })
     return post
 }
 export default SendPostData;

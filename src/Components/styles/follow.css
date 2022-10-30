@@ -32,15 +32,19 @@
   border: none;
   background: none;
 }
-.lGop ul {
+.FollowList {
   margin: 0;
   padding: 1rem;
   list-style: none;
   max-height: 30rem;
   overflow-y: scroll;
 }
-.lGop li {
-  margin: 0.5rem 0;
+.FollowList li {
+  padding: 0.5rem 0;
+  border-top: 1px solid rgb(230, 230, 230);
+}
+.lGop li:first-child {
+  border: none;
 }
 .lGop a {
   text-decoration: none;

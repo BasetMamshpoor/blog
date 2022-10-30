@@ -13,7 +13,9 @@ const SignIn = () => {
     const history = useHistory();
     const [showHidePass, setShowHidePass] = useState(false)
     const [showHideCpass, setShowHideCpass] = useState(false)
-    const [userInfo, setUserInfo] = useState({ username: '', first_name: '', last_name: '', email: '', password: '', confirm_password: '' })
+    const [userInfo, setUserInfo] = useState({
+        username: '', first_name: '', last_name: '', email: '', password: '', confirm_password: '', profile: { "photo": null },
+    })
     const [touch, setTouch] = useState({})
     const errors = error(userInfo, 'signin')
 
@@ -110,7 +112,7 @@ const SignIn = () => {
                         <img onClick={handleShowHide} className={styles.imgPass} src={showHideCpass ? openEye : closeEye} alt="Cshow-hide" />
                         {touch.confirm_password && errors.confirm_password && <span className={styles.error}>{errors.confirm_password}</span>}
                     </div>
-                    <button className={styles.btn} type="submit">Sign In</button>
+                    <button className={styles.btn} type="submit">Sign Up</button>
 
                     <Link to='/login' className={styles.signIn}>Already Have Account ?</Link>
                 </form>

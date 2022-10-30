@@ -30,8 +30,9 @@ const UserProfile = () => {
             const user = await newUser(userName, token)
             if (user === null) history.push('/usernotfound')
             else {
-                setUser(user)
-                setBlogs(user.post_set)
+                await setUser(user)
+                await setBlogs(user.post_set)
+                if (await user.post_set.length < 1) setEnd(!end)
             }
         }
         findUser();
@@ -62,7 +63,7 @@ const UserProfile = () => {
         await axios.delete(`/posts/post/${id}`, { headers: { 'Authorization': `Token ${token}` } })
             .then(() => setBlogs(blogs.filter(b => b.id !== id)))
     }
-    
+
     const handleEditPost = async (id) => {
         // await axios.put(`posts/post/${id}`, {
         //     "title": "30",
@@ -129,8 +130,8 @@ const UserProfile = () => {
         <>
             {
                 <div className='container'>
-                    {params.follow === 'followers' && <Follow type={'Followers'} users={user.followers} />}
-                    {params.follow === 'following' && <Follow type={'Following'} users={user.following} />}
+                    {params.follow === 'followers' && <Follow type={'Followers'} id={user.id} />}
+                    {params.follow === 'following' && <Follow type={'Following'} id={user.id} />}
 
                     <div className="row justify-content-between">
                         <div className="col-4">
