@@ -1,5 +1,6 @@
 .prVk {
   border: 3px solid rgb(68, 146, 192);
+  top: 5rem;
 }
 .gCte {
   flex-direction: column;
@@ -10,12 +11,17 @@
   font-size: 1.3rem;
 }
 .nmU {
-  width: 110px;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 1rem;
+  border: 1px solid rgb(243, 243, 243);
+  border-radius: 50%;
+  overflow: hidden;
 }
 .nmU img {
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .mUyf {
   align-items: center;

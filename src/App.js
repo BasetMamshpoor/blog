@@ -9,6 +9,7 @@ import UserProfile from './Components/UserProfile'
 import AddBlog from './Components/AddBlog';
 import Details from './Components/Details';
 import Navbar from './Components/Navbar';
+import Follow from './Components/Follow';
 
 
 
@@ -21,7 +22,7 @@ function App() {
         <Route path='/login' component={LogIn} />
         <Route path='/signin' component={SignIn} />
         <Route path='/posts/:id' component={Details} />
-        <Route path='/users/:user/:follow' component={UserProfile} />
+        <Route path='/users/:user/:follow' component={Follow} />
         <Route path='/:user/addblog' component={AddBlog} />
         <Route exact path='/users/:user' component={UserProfile} />
         <Route path='/usernotfound' component={UserNotFound} />

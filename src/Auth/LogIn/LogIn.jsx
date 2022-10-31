@@ -64,6 +64,7 @@ const LogIn = () => {
                 <div className={styles.main}>
                     <div className={styles.formSignIn}>
                         <h4>Log In</h4>
+                        <Link to='/explore'>Explore</Link>
                         <form className={styles.form} method='POST' onSubmit={handleSubmit}>
                             <div className={styles.formInput}>
                                 <input

@@ -1,10 +1,9 @@
-import React, { useLayoutEffect } from 'react';
-import { useState } from 'react';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
 import './styles/addBlog.css'
-import SendPostData from '../axios/SendPostData'
+import SendPostData, { EditPost } from '../axios/SendPostData'
 import { ToastContainer } from 'react-toastify';
 import notify from '../Auth/toast'
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 
 const validate = (obj) => {
@@ -24,6 +23,7 @@ const validate = (obj) => {
 
 
 const AddBlog = () => {
+    const { state } = useLocation();
     const [addPost, setAddPost] = useState({ title: '', body: '', uplouded_images: [], status: 'PU' })
     const error = validate(addPost)
     const [touch, setTouch] = useState({ title: false, body: false })
@@ -33,6 +33,18 @@ const AddBlog = () => {
     useLayoutEffect(() => {
         if (!token) history.push('/login')
     }, [token, history])
+
+    useEffect(() => {
+        if (state) {
+            setAddPost(prev => {
+                const { title, body, status, id } = state
+                return {
+                    ...prev, title, body, status, id
+                }
+            })
+        }
+    }, [state])
+
 
     const handleChange = event => {
         setAddPost(prev => {
@@ -61,6 +73,17 @@ const AddBlog = () => {
                 .catch(() => notify('error', 'change the title!'))
         }
     }
+    const handleEditPost = async (e) => {
+        console.log(addPost);
+        e.preventDefault();
+        if (Object.keys(error).length > 0) {
+            setTouch({ title: true, body: true })
+        } else {
+            await EditPost(addPost, token)
+                .then(() => history.push(`/users/${localStorage.getItem('username')}`))
+                .catch(() => notify('error', 'change the title!'))
+        }
+    }
     const handleFocus = (e) => {
         setTouch(prev => { return { ...prev, [e.target.name]: true } })
     }
@@ -69,7 +92,7 @@ const AddBlog = () => {
             {
                 <div className='wQio'>
                     <div className="tab-pane" id="post-object-form">
-                        <form encType='multipart/form-data' className="form-horizontal" onSubmit={handleSendData}>
+                        <form encType='multipart/form-data' className="form-horizontal" onSubmit={state ? handleEditPost : handleSendData}>
                             <fieldset>
                                 <div className="form-group ">
                                     <label className="control-label">Title</label>
@@ -95,7 +118,11 @@ const AddBlog = () => {
                                     </select>
                                 </div>
                                 <div className="form-actions">
-                                    <button type='submit' className="js-tooltip">POST</button>
+                                    {state ?
+                                        <button type='submit' className="js-tooltip">EDIT</button>
+                                        :
+                                        <button type='submit' className="js-tooltip">POST</button>
+                                    }
                                     <button type="button" className='closeModal' onClick={() => history.goBack()}>CANCLE</button>
                                 </div>
                             </fieldset>

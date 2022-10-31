@@ -22,6 +22,8 @@
   align-items: center;
 }
 .Bfou p {
+  text-transform: capitalize;
+  font-size: 20px;
   margin: 0;
   text-align: center;
   flex: 1;
@@ -40,8 +42,24 @@
   overflow-y: scroll;
 }
 .FollowList li {
-  padding: 0.5rem 0;
+  letter-spacing: 1px;
+  font-size: 20px;
+  padding: .5rem 0;
   border-top: 1px solid rgb(230, 230, 230);
+  display: flex;
+  align-items: center;
+}
+.followImgProf {
+  flex-shrink: 0;
+  width: 86px;
+}
+.followImgProf img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.FollowList a {
+  margin-left: 1rem;
 }
 .lGop li:first-child {
   border: none;

@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 
 
 
-const Blog = ({ data, handleDeletePost, handleEditPost, from, link = true }) => {
-    const { id, author, images, title, body, created } = data
+const Blog = ({ data, handleDeletePost, from, link = true }) => {
+    const { id, author, authorProfile, images, title, body, status, created } = data
     const slider = useRef();
 
     const pictures = images.length > 1 && images.map(img => {
@@ -54,12 +54,16 @@ const Blog = ({ data, handleDeletePost, handleEditPost, from, link = true }) => 
                 <div className='blogAuthor'>
                     <div className='d-flex align-items-center'>
                         <div className='authorImg'>
-                            <img src={userlogo} alt='author' width='60px' />
+                            {authorProfile ?
+                                <img src={authorProfile} alt='author' width='60px' />
+                                :
+                                <img src={userlogo} alt='author' width='60px' />
+                            }
                         </div>
                         {link ? <Link to={`/users/${author}`}>{author}</Link> : <p>{author}</p>}
                     </div>
                     {
-                        handleDeletePost &&
+                        !link &&
                         <div className="phWxoR">
                             <input type="checkbox" id={`optionBlog${id}`} hidden />
                             <label htmlFor={`optionBlog${id}`} className="XsPzoY">
@@ -70,7 +74,7 @@ const Blog = ({ data, handleDeletePost, handleEditPost, from, link = true }) => 
                             <div className="jWcoI">
                                 <ul>
                                     <li onClick={() => handleDeletePost(id)}>DELETE</li>
-                                    <li onClick={() => handleEditPost(id)} hidden>EDIT</li>
+                                    <li><Link to={{ pathname: `/${author}/addblog/`, state: { title, body, status, id } }}>EDIT</Link></li>
                                 </ul>
                             </div>
                         </div>

@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import './styles/follow.css'
+import userlogo from './images/Ei-user.svg'
+
 
 const getFollow = async (type, id, offset = null) => {
     const token = localStorage.getItem('token')
@@ -20,23 +21,27 @@ const getFollow = async (type, id, offset = null) => {
     }
 }
 
-const Follow = ({ type, id }) => {
+const Follow = () => {
     const history = useHistory();
     const List = useRef()
+    const { state } = useLocation();
+    const params = useParams()
     const [follow, setFollow] = useState()
     const [isFetching, setIsFetching] = useState(false)
     const [end, setEnd] = useState(false)
 
+    useLayoutEffect(() => {
+        if (!state) history.push(`/users/${params.user}`)
+    }, [])
 
     useEffect(() => {
         const get = async () => {
-            const follow = await getFollow(type, id)
-            await setFollow(follow.results)
-            if (await follow.next === null) setEnd(!end)
+            const followUser = await getFollow(params.follow, state.id)
+            await setFollow(followUser.results)
+            if (await followUser.next === null) setEnd(!end)
         }
         get()
         List.current.addEventListener('scroll', handleScroll)
-        return () => List.current.removeEventListener('scroll', handleScroll);
     }, [history])
 
     useEffect(() => {
@@ -45,47 +50,53 @@ const Follow = ({ type, id }) => {
         }
     }, [isFetching, follow]);
 
-    function handleScroll(e) {
-        if ((document.scrollingElement.scrollHeight - window.innerHeight) <= (document.documentElement.scrollTop.toFixed())) {
-            setIsFetching(true);
-            console.log('end');
+    function handleScroll() {
+        if (List.current.scrollHeight - List.current.offsetHeight <= (List.current.scrollTop + 1)) {
+            setIsFetching(true)
         }
     }
 
     async function fetchMoreListItems() {
-        // const user = await newUser(userName, token, Math.round(blogs.length / 5) + 1)
-        // if (await user.post_set.length < 1) setEnd(true)
-        // await setBlogs(prev => prev.concat(user.post_set))
-        // await setIsFetching(false)
+        const followUser = await getFollow(params.follow, state.id, follow.length)
+        if (await followUser.next === null) setEnd(true)
+        await setFollow(prev => prev.concat(followUser.results))
+        await setIsFetching(false)
     }
 
-
     const list = follow && follow.map(i => {
-        // if (type === 'Followers') {
-        return (
-            <li key={i.id}><Link to={`/users/${i.user}`} >{i.user}</Link></li>
-        )
-        // } else {
-        // return (
-        //     <li key={i.id}><Link to={`/users/${i.user}`} >{i.user}</Link></li>
-        // )
-        // }
+        if (params.follow === 'followers') {
+            return (
+                <li key={i.id}>
+                    <div className="followImgProf">
+                        <img src={userlogo} alt="" />
+                    </div>
+                    <Link to={`/users/${i.user}`} >{i.user}</Link>
+                </li>
+            )
+        } else {
+            return (
+                <li key={i.id}>
+                    <div className="followImgProf">
+                        <img src={userlogo} alt="" />
+                    </div>
+                    <Link to={`/users/${i.following_user_id}`} >{i.following_user_id}</Link>
+                </li>
+            )
+        }
     })
 
-
     return (
-        <div className='wXFr'>
-            <div className="lGop">
-                <header className="Bfou d-flex">
-                    <p>{type}</p>
-                    <button onClick={() => history.goBack()}>X</button>
-                </header>
-                <ul className='FollowList' ref={List}>
-                    {list}
-                    {list}
-                    {list}
-                    {list}
-                </ul>
+        <div className="container">
+            <div className='wXFr'>
+                <div className="lGop">
+                    <header className="Bfou d-flex">
+                        <p>{params.follow}</p>
+                        <button onClick={() => history.goBack()}>X</button>
+                    </header>
+                    <ul className='FollowList' ref={List}>
+                        {list}
+                    </ul>
+                </div>
             </div>
         </div>
     );

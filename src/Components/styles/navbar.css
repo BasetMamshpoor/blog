@@ -11,10 +11,10 @@
 .navBar li {
   padding: 0.5rem 0;
   margin: 0 1rem;
-  cursor: pointer;
 }
 .navBar li a {
   display: block;
   width: 100%;
   height: 100%;
+  cursor: pointer;
 }

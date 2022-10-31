@@ -1,11 +1,20 @@
 import axios from 'axios';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { useHistory, useParams, Link, } from 'react-router-dom';
 import Blog from './Blog';
-import Follow from './Follow'
 import userlogo from './images/Ei-user.svg'
+import loading from './images/200.gif'
 import './styles/userprofile.css'
 import newUser from '../axios/newUser';
+
+const isFollowers = async (id, user) => {
+    const token = localStorage.getItem('token')
+    const get = await axios.get(`/accounts/following/${id}/${user}`, { headers: { 'Authorization': `Token ${token}` } })
+        .then(() => true)
+        .catch(() => false)
+
+    return get;
+}
 
 const UserProfile = () => {
     const token = localStorage.getItem('token')
@@ -15,30 +24,35 @@ const UserProfile = () => {
     const userName = params.user
     const [user, setUser] = useState('')
     const [blogs, setBlogs] = useState([])
+    const [isFollow, setIsFollow] = useState(false)
+    const [render, setRender] = useState(0)
     const [isFetching, setIsFetching] = useState(false)
     const [end, setEnd] = useState(false)
-    const isFollow = user && user.followers.find(u => u.user === myUsername)
     const me = (myUsername === userName) ? true : false
 
 
     useLayoutEffect(() => {
-        if (!token) history.push('/login');
-    }, [token, history])
+        if (token === null)
+            history.push('/login');
+    }, [history, token])
 
     useEffect(() => {
-        const findUser = async () => {
-            const user = await newUser(userName, token)
-            if (user === null) history.push('/usernotfound')
-            else {
-                await setUser(user)
-                await setBlogs(user.post_set)
-                if (await user.post_set.length < 1) setEnd(!end)
+        if (token) {
+            const findUser = async () => {
+                const user = await newUser(userName, token)
+                if (await user === null) history.push('/usernotfound')
+                else {
+                    await setUser(user)
+                    await setBlogs(user.post_set)
+                    if (await user.post_set.length < 1) setEnd(!end)
+                    if (!me) setIsFollow(await isFollowers(user.id, userName));
+                }
             }
+            findUser();
         }
-        findUser();
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [history, params])
+    }, [history, params, render])
 
     useEffect(() => {
         if (isFetching && blogs && !end) {
@@ -53,8 +67,8 @@ const UserProfile = () => {
     }
 
     async function fetchMoreListItems() {
-        const user = await newUser(userName, token, Math.round(blogs.length / 5) + 1)
-        if (await user.post_set.length < 1) setEnd(true)
+        const user = await newUser(userName, token, Math.ceil(blogs.length / 5) + 1)
+        if (await user.post_set.length < 1) setEnd(!end)
         await setBlogs(prev => prev.concat(user.post_set))
         await setIsFetching(false)
     }
@@ -62,23 +76,6 @@ const UserProfile = () => {
     const handleDeletePost = async (id) => {
         await axios.delete(`/posts/post/${id}`, { headers: { 'Authorization': `Token ${token}` } })
             .then(() => setBlogs(blogs.filter(b => b.id !== id)))
-    }
-
-    const handleEditPost = async (id) => {
-        // await axios.put(`posts/post/${id}`, {
-        //     "title": "30",
-        //     "body": "body",
-        //     "picture": null,
-        //     "status": "PU"
-        // },
-        //     {
-        //         headers:
-        //         {
-        //             'Content-Type': 'multipart/form-data',
-        //             'Authorization': `Token ${token}`
-        //         }
-        //     })
-        //     .then(res => console.log(res))
     }
 
     const Blogs = blogs && blogs.map(item => {
@@ -96,7 +93,7 @@ const UserProfile = () => {
                     key={item.id}
                     data={item}
                     handleDeletePost={handleDeletePost}
-                    handleEditPost={handleEditPost}
+                    // handleEditPost={handleEditPost}
                     link={false}
                 />
             )
@@ -106,7 +103,7 @@ const UserProfile = () => {
     const handleFollow = async () => {
         if (isFollow) {
             await axios.delete(`/accounts/following/${isFollow.id}`, { headers: { 'Authorization': `Token ${token}` } })
-                .then(async () => setUser(await newUser(userName, token)))
+                .then(() => setRender(Math.random()))
         } else {
             await axios.post('/accounts/following/',
                 { "following_user_id": user.username },
@@ -117,7 +114,7 @@ const UserProfile = () => {
                         'Authorization': `Token ${token}`
                     }
                 })
-                .then(async () => setUser(await newUser(userName, token)))
+                .then(() => setRender(Math.random()))
         }
     }
 
@@ -128,27 +125,28 @@ const UserProfile = () => {
 
     return (
         <>
-            {
-                <div className='container'>
-                    {params.follow === 'followers' && <Follow type={'Followers'} id={user.id} />}
-                    {params.follow === 'following' && <Follow type={'Following'} id={user.id} />}
-
-                    <div className="row justify-content-between">
-                        <div className="col-4">
-                            <div className="prVk">
+            <div className='container'>
+                <div className="row justify-content-between">
+                    <div className="col-4">
+                        {user ?
+                            <div className="prVk sticky-top">
                                 <header className="gCte d-flex my-3">
                                     <div className="nmU">
-                                        <img src={userlogo} alt="" />
+                                        {user.profile.photo ?
+                                            <img src={user.profile.photo} alt="" />
+                                            :
+                                            <img src={userlogo} alt="" />
+                                        }
                                     </div>
                                     <h3>{user && user.username}</h3>
                                 </header>
                                 <div className="mUyf d-flex">
-                                    <Link to={`/users/${userName}/followers`} className="mgVj">
-                                        <span>{user && user.followers.length}</span>
+                                    <Link to={{ pathname: `/users/${userName}/followers`, state: { id: user.id } }} className="mgVj">
+                                        <span>{user && user.followers}</span>
                                         <p>followers</p>
                                     </Link>
-                                    <Link to={`/users/${userName}/following`} className="mgVj">
-                                        <span>{user && user.following.length}</span>
+                                    <Link to={{ pathname: `/users/${userName}/followers`, state: { id: user.id } }} className="mgVj">
+                                        <span>{user && user.following}</span>
                                         <p>following</p>
                                     </Link>
                                 </div>
@@ -174,13 +172,17 @@ const UserProfile = () => {
                                     }
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-8">
+                            : <div className='loading'><img src={loading} alt='loading' /></div>
+                        }
+                    </div>
+                    <div className="col-8">
+                        <div className="gBcymj">
                             {Blogs.length ? Blogs : <p>no post</p>}
                         </div>
+                        {isFetching && !end && <div className='loading'><img src={loading} alt='loading' /></div>}
                     </div>
                 </div>
-            }
+            </div>
         </>
     );
 };
