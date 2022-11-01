@@ -93,7 +93,6 @@ const UserProfile = () => {
                     key={item.id}
                     data={item}
                     handleDeletePost={handleDeletePost}
-                    // handleEditPost={handleEditPost}
                     link={false}
                 />
             )
