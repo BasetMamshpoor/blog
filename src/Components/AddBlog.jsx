@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useEffect, useState } from 'react';
 import './styles/addBlog.css'
-import SendPostData, { EditPost } from '../axios/SendPostData'
+import SendPostData from '../axios/SendPostData'
+import { EditPost } from '../axios/managePost';
 import { ToastContainer } from 'react-toastify';
 import notify from '../Auth/toast'
 import { useHistory, useLocation } from 'react-router-dom';
@@ -74,12 +75,11 @@ const AddBlog = () => {
         }
     }
     const handleEditPost = async (e) => {
-        console.log(addPost);
         e.preventDefault();
         if (Object.keys(error).length > 0) {
             setTouch({ title: true, body: true })
         } else {
-            await EditPost(addPost, token)
+            await EditPost(addPost)
                 .then(() => history.push(`/users/${localStorage.getItem('username')}`))
                 .catch(() => notify('error', 'change the title!'))
         }

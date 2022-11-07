@@ -27,14 +27,15 @@ const Details = () => {
     }, [id, render])
 
     return (
-        <>{post &&
-            <div className='details'>
-                <div className="container">
-                    <DetailBlog post={post} setRender={setRender} token={token} />
+        <>
+            {post &&
+                <div className='details'>
+                    <div className="container">
+                        <DetailBlog post={post} setRender={setRender} token={token} />
+                    </div>
+                    <ToastContainer />
                 </div>
-                <ToastContainer />
-            </div>
-        }
+            }
         </>
     );
 };

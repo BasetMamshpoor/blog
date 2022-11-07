@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import userlogo from './images/Ei-user.svg'
 import { Link } from 'react-router-dom';
 import Comment from './Comment.jsx'
@@ -49,7 +49,11 @@ const DetailBlog = ({ post, token }) => {
             <div className='post'>
                 <div className='postAuthor'>
                     <div className='authorImg'>
-                        <img src={userlogo} alt='author' width='60px' />
+                        {post.profile ?
+                                <img src={post.profile} alt='author' />
+                                :
+                                <img src={userlogo} alt='author' />
+                            }
                     </div>
                     <Link to={`/users/${post.author}`}>{post.author}</Link>
                 </div>
@@ -81,7 +85,7 @@ const DetailBlog = ({ post, token }) => {
                         </div>
                     </div>
                 </div>
-                <Comment token={token} id={post.id}  />
+                <Comment token={token} id={post.id} />
             </div>
         </>
     );

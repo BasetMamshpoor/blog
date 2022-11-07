@@ -1,22 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import notify from '../Auth/toast'
 import loading from './images/200.gif'
-
-
-const getComment = async (offset = null, id) => {
-    if (offset !== null) {
-        const get = await axios.get(`/posts/comment/${id}/post_id/?offset=${offset}`)
-            .then(res => res.data)
-            .catch(err => console.log(err.response.data))
-        return get;
-    }
-    const get = await axios.get(`/posts/comment/${id}/post_id`)
-        .then(res => res.data)
-        .catch(err => console.log(err.response.data))
-    return get;
-}
+import getComment, { sendComment } from '../axios/Comment';
 
 const Comment = ({ token, id }) => {
     const [Comments, setComments] = useState()
@@ -59,16 +45,10 @@ const Comment = ({ token, id }) => {
         e.preventDefault()
         if (!token) notify('error', 'Please Login')
         else if (comment.trim()) {
-            await axios.post('posts/comment/', { 'body': comment, 'post': id }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Token ${token}`
-                }
+            await sendComment(comment, id, token).then(() => {
+                setRender(Math.random())
+                setComment('')
             })
-                .then(() => {
-                    setRender(Math.random())
-                    setComment('')
-                })
         }
     }
 

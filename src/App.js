@@ -21,7 +21,7 @@ function App() {
       <Switch>
         <Route path='/login' component={LogIn} />
         <Route path='/signin' component={SignIn} />
-        <Route path='/posts/:id' component={Details} />
+        <Route path='/posts/:id/:slug' component={Details} />
         <Route path='/users/:user/:follow' component={Follow} />
         <Route path='/:user/addblog' component={AddBlog} />
         <Route exact path='/users/:user' component={UserProfile} />

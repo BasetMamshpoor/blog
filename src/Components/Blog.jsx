@@ -2,11 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import './styles/blog.css';
 import userlogo from './images/Ei-user.svg'
 import { Link } from 'react-router-dom';
+import { DeletePost } from '../axios/managePost';
 
 
 
-const Blog = ({ data, handleDeletePost, from, link = true }) => {
-    const { id, author, authorProfile, images, title, body, status, created } = data
+const Blog = ({ data, setBlogs, from, link = true }) => {
+    const { id, slug, author, profile, images, title, body, status, created } = data
     const slider = useRef();
 
     const pictures = images.length > 1 && images.map(img => {
@@ -52,18 +53,18 @@ const Blog = ({ data, handleDeletePost, from, link = true }) => {
         <>
             <div className='blog' >
                 <div className='blogAuthor'>
-                    <div className='d-flex align-items-center'>
+                    <div className='d-flex align-items-center p-1'>
                         <div className='authorImg'>
-                            {authorProfile ?
-                                <img src={authorProfile} alt='author' width='60px' />
+                            {profile ?
+                                <img src={profile} alt='author' />
                                 :
-                                <img src={userlogo} alt='author' width='60px' />
+                                <img src={userlogo} alt='author' />
                             }
                         </div>
                         {link ? <Link to={`/users/${author}`}>{author}</Link> : <p>{author}</p>}
                     </div>
                     {
-                        !link &&
+                        setBlogs &&
                         <div className="phWxoR">
                             <input type="checkbox" id={`optionBlog${id}`} hidden />
                             <label htmlFor={`optionBlog${id}`} className="XsPzoY">
@@ -73,7 +74,7 @@ const Blog = ({ data, handleDeletePost, from, link = true }) => {
                             </label>
                             <div className="jWcoI">
                                 <ul>
-                                    <li onClick={() => handleDeletePost(id)}>DELETE</li>
+                                    <li onClick={() => DeletePost(id).then(() => setBlogs(prev => prev.filter(b => b.id !== id)))}>DELETE</li>
                                     <li><Link to={{ pathname: `/${author}/addblog/`, state: { title, body, status, id } }}>EDIT</Link></li>
                                 </ul>
                             </div>
@@ -104,7 +105,7 @@ const Blog = ({ data, handleDeletePost, from, link = true }) => {
                         <p dir='auto'>{body}</p>
                         <div className="blogFooter border-top">
                             <span>{created.slice(0, 4) + ' / ' + created.slice(4, 6) + ' / ' + created.slice(6, 8)}</span>
-                            <Link to={{ pathname: `/posts/${id}`, state: { from } }}>more...</Link>
+                            <Link to={{ pathname: `/posts/${id}/${slug}`, state: { from } }}>more...</Link>
                         </div>
                     </div>
                 </div>

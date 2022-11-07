@@ -1,25 +1,8 @@
-import axios from 'axios';
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import './styles/follow.css'
 import userlogo from './images/Ei-user.svg'
-
-
-const getFollow = async (type, id, offset = null) => {
-    const token = localStorage.getItem('token')
-    if (offset === null) {
-        const get = await axios.get(`/accounts/following/${id}/${type}`, { headers: { 'Authorization': `Token ${token}` } })
-            .then(res => res.data)
-            .catch(err => err.response.data)
-        return get;
-    } else {
-        const get = await axios
-            .get(`/accounts/following/${id}/${type}/?offset=${offset}`, { headers: { 'Authorization': `Token ${token}` } })
-            .then(res => res.data)
-            .catch(err => err.response.data)
-        return get;
-    }
-}
+import { getFollow } from '../axios/FollowRequest';
 
 const Follow = () => {
     const history = useHistory();
@@ -32,7 +15,7 @@ const Follow = () => {
 
     useLayoutEffect(() => {
         if (!state) history.push(`/users/${params.user}`)
-    }, [])
+    }, [state, params])
 
     useEffect(() => {
         const get = async () => {

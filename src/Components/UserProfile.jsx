@@ -6,15 +6,7 @@ import userlogo from './images/Ei-user.svg'
 import loading from './images/200.gif'
 import './styles/userprofile.css'
 import newUser from '../axios/newUser';
-
-const isFollowers = async (id, user) => {
-    const token = localStorage.getItem('token')
-    const get = await axios.get(`/accounts/following/${id}/${user}`, { headers: { 'Authorization': `Token ${token}` } })
-        .then(() => true)
-        .catch(() => false)
-
-    return get;
-}
+import FollowRequest from '../axios/FollowRequest';
 
 const UserProfile = () => {
     const token = localStorage.getItem('token')
@@ -24,7 +16,6 @@ const UserProfile = () => {
     const userName = params.user
     const [user, setUser] = useState('')
     const [blogs, setBlogs] = useState([])
-    const [isFollow, setIsFollow] = useState(false)
     const [render, setRender] = useState(0)
     const [isFetching, setIsFetching] = useState(false)
     const [end, setEnd] = useState(false)
@@ -45,7 +36,6 @@ const UserProfile = () => {
                     await setUser(user)
                     await setBlogs(user.post_set)
                     if (await user.post_set.length < 1) setEnd(!end)
-                    if (!me) setIsFollow(await isFollowers(user.id, userName));
                 }
             }
             findUser();
@@ -73,11 +63,6 @@ const UserProfile = () => {
         await setIsFetching(false)
     }
 
-    const handleDeletePost = async (id) => {
-        await axios.delete(`/posts/post/${id}`, { headers: { 'Authorization': `Token ${token}` } })
-            .then(() => setBlogs(blogs.filter(b => b.id !== id)))
-    }
-
     const Blogs = blogs && blogs.map(item => {
         if (!me) {
             return (
@@ -92,7 +77,7 @@ const UserProfile = () => {
                 <Blog
                     key={item.id}
                     data={item}
-                    handleDeletePost={handleDeletePost}
+                    setBlogs={setBlogs}
                     link={false}
                 />
             )
@@ -100,26 +85,13 @@ const UserProfile = () => {
     })
 
     const handleFollow = async () => {
-        if (isFollow) {
-            await axios.delete(`/accounts/following/${isFollow.id}`, { headers: { 'Authorization': `Token ${token}` } })
-                .then(() => setRender(Math.random()))
-        } else {
-            await axios.post('/accounts/following/',
-                { "following_user_id": user.username },
-                {
-                    headers:
-                    {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Token ${token}`
-                    }
-                })
-                .then(() => setRender(Math.random()))
-        }
+        await FollowRequest(user.status_follow, user.username, token).then(() => setRender(Math.random()))
     }
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        history.push('/login')
+        localStorage.removeItem('username');
+        history.push('/explore')
     }
 
     return (
@@ -165,7 +137,7 @@ const UserProfile = () => {
                                             </>
                                             :
                                             <>
-                                                <button onClick={() => handleFollow()}>{isFollow ? 'unFollow' : 'follow'}</button>
+                                                <button onClick={() => handleFollow()}>{user.status_follow ? 'unFollow' : 'follow'}</button>
                                                 <button disabled>message</button>
                                             </>
                                     }
