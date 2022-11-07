@@ -103,7 +103,7 @@ const UserProfile = () => {
                             <div className="prVk sticky-top">
                                 <header className="gCte d-flex my-3">
                                     <div className="nmU">
-                                        {user.profile.photo ?
+                                        {user.profile ?
                                             <img src={user.profile.photo} alt="" />
                                             :
                                             <img src={userlogo} alt="" />
