@@ -80,6 +80,10 @@
   margin: 0.3rem 0;
   cursor: pointer;
 }
+.jWcoI ul li a {
+  width: 100%;
+  display: block;
+}
 .blogAuthor a {
   color: #000;
   text-decoration: none;

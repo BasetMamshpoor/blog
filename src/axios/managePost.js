@@ -3,7 +3,7 @@ import axios from 'axios';
 const token = localStorage.getItem('token')
 
 async function EditPost(data) {
-    const { title, body, uplouded_images, status, id } = data
+    const { title, body, uplouded_images, status, id, images } = data
 
     let formdata = new FormData();
     formdata.append("title", title);
@@ -14,6 +14,9 @@ async function EditPost(data) {
         formdata.append("uplouded_images", img);
     }
 
+    if (images.length > 0) {
+        formdata.append('image_option', images)
+    }
 
     await axios.put(`/posts/post/${id}/`, formdata, {
         headers:

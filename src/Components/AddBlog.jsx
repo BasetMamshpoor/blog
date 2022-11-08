@@ -25,7 +25,7 @@ const validate = (obj) => {
 
 const AddBlog = () => {
     const { state } = useLocation();
-    const [addPost, setAddPost] = useState({ title: '', body: '', uplouded_images: [], status: 'PU' })
+    const [addPost, setAddPost] = useState({ title: '', body: '', uplouded_images: [], status: 'PU', images: [] })
     const error = validate(addPost)
     const [touch, setTouch] = useState({ title: false, body: false })
     const token = localStorage.getItem('token')
@@ -87,6 +87,34 @@ const AddBlog = () => {
     const handleFocus = (e) => {
         setTouch(prev => { return { ...prev, [e.target.name]: true } })
     }
+    const handleImageOption = (e) => {
+        const { name } = e.target
+        setAddPost(prev => {
+            const { images } = prev
+            if (!images.includes(name)) {
+                images.push(name);
+            } else {
+                images.splice(images.indexOf(name), 1);
+            }
+            return { ...prev }
+        })
+    }
+    const ImageList = state && state.images.length > 0 && state.images.map(i => {
+        return (
+            <div key={i.id} className="ExBt_2">
+                <input
+                    type="checkbox"
+                    name={i.id}
+                    id={`image${i.id}`}
+                    hidden
+                    onChange={handleImageOption}
+                />
+                <label htmlFor={`image${i.id}`} className="image_holder">
+                    <img src={i.image} alt="imagePost" width='100%' />
+                </label>
+            </div>
+        )
+    })
     return (
         <>
             {
@@ -100,12 +128,20 @@ const AddBlog = () => {
                                     {touch.title && error.title && <p>{error.title}</p>}
                                 </div>
                                 <div className="form-group">
-                                    <label className="control-label ">Body</label>
+                                    <label className="control-label">Body</label>
                                     <textarea name="body" value={addPost.body} onFocus={handleFocus} onChange={handleChange} className="form-control"></textarea>
                                     {touch.body && error.body && <p>{error.body}</p>}
                                 </div>
+                                {state && state.images.length > 0 &&
+                                    <div className="form-group">
+                                        <label className="control-label">select image to delete!</label>
+                                        <div className="OvrcU d-flex">
+                                            {ImageList}
+                                        </div>
+                                    </div>
+                                }
                                 <div className="form-group">
-                                    <label className="control-label">images</label>
+                                    <label className="control-label">{state ? 'add new image' : 'images'}</label>
                                     <br />
                                     <input name="uplouded_images" multiple type="file" onChange={handleUpload} accept='image/jpeg, image/jpg, image/png, image/gif, image/webp' />
                                 </div>
@@ -129,7 +165,6 @@ const AddBlog = () => {
                         </form>
                     </div>
                 </div>
-
             }
             <ToastContainer />
         </>

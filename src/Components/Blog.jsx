@@ -75,7 +75,7 @@ const Blog = ({ data, setBlogs, from, link = true }) => {
                             <div className="jWcoI">
                                 <ul>
                                     <li onClick={() => DeletePost(id).then(() => setBlogs(prev => prev.filter(b => b.id !== id)))}>DELETE</li>
-                                    <li><Link to={{ pathname: `/${author}/addblog/`, state: { title, body, status, id } }}>EDIT</Link></li>
+                                    <li><Link to={{ pathname: `/${author}/addblog/`, state: { title, body, status, id, images } }}>EDIT</Link></li>
                                 </ul>
                             </div>
                         </div>
