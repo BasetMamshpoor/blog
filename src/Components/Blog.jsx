@@ -3,12 +3,13 @@ import './styles/blog.css';
 import userlogo from './images/Ei-user.svg'
 import { Link } from 'react-router-dom';
 import { DeletePost } from '../axios/managePost';
-
+import Like from './Like';
 
 
 const Blog = ({ data, setBlogs, from, link = true }) => {
-    const { id, slug, author, profile, images, title, body, status, created } = data
+    const { id, slug, author, profile, images, title, body, status, created, updated, like, status_like } = data
     const slider = useRef();
+
 
     const pictures = images.length > 1 && images.map(img => {
         return (
@@ -35,10 +36,10 @@ const Blog = ({ data, setBlogs, from, link = true }) => {
             function showSlides(n) {
                 const num = slider.current.children[0].children
                 if (n > num.length) slideIndex = num.length
-                if (slideIndex == num.length) buttons[1].style.display = 'none'
+                if (slideIndex === num.length) buttons[1].style.display = 'none'
                 else buttons[1].style.display = 'block'
                 if (n < 1) slideIndex = 1
-                if (slideIndex == 1) buttons[0].style.display = 'none'
+                if (slideIndex === 1) buttons[0].style.display = 'none'
                 else buttons[0].style.display = 'block'
                 for (let i = 0; i < num.length; i++) {
                     num[i].className = num[i].className.replace(' showSlide', '');
@@ -47,6 +48,7 @@ const Blog = ({ data, setBlogs, from, link = true }) => {
             }
         };
     }, [])
+
 
 
     return (
@@ -61,7 +63,7 @@ const Blog = ({ data, setBlogs, from, link = true }) => {
                                 <img src={userlogo} alt='author' />
                             }
                         </div>
-                        {link ? <Link to={`/users/${author}`}>{author}</Link> : <p>{author}</p>}
+                        {link ? <Link to={`/${author}`}>{author}</Link> : <p>{author}</p>}
                     </div>
                     {
                         setBlogs &&
@@ -75,7 +77,7 @@ const Blog = ({ data, setBlogs, from, link = true }) => {
                             <div className="jWcoI">
                                 <ul>
                                     <li onClick={() => DeletePost(id).then(() => setBlogs(prev => prev.filter(b => b.id !== id)))}>DELETE</li>
-                                    <li><Link to={{ pathname: `/${author}/addblog/`, state: { title, body, status, id, images } }}>EDIT</Link></li>
+                                    <li><Link to={{ pathname: `/${author}/Blog-Option/`, state: { title, body, status, id, images } }}>EDIT</Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -102,10 +104,24 @@ const Blog = ({ data, setBlogs, from, link = true }) => {
                     }
                     <div className='aboutBlog border-top'>
                         <h4 dir='auto'>{title}</h4>
-                        <p dir='auto'>{body}</p>
-                        <div className="blogFooter border-top">
-                            <span>{created.slice(0, 4) + ' / ' + created.slice(4, 6) + ' / ' + created.slice(6, 8)}</span>
-                            <Link to={{ pathname: `/posts/${id}/${slug}`, state: { from } }}>more...</Link>
+                        <div className="Kbyci my-2">
+                            <input id={`read-more-${id}`} type="checkbox" className="read-more__checkbox" hidden />
+                            <p dir='auto'>{body}</p>
+                            <label htmlFor={`read-more-${id}`} className="read-more__label" data-read-more="more..." data-read-less="less" aria-hidden="true"></label>
+                        </div>
+                        <div className="blogFooter border-top pt-2">
+                            <div className="jcEzy d-flex align-items-center">
+                                <div className="qxOpli">
+                                    <span className='Ucrtl9_p'>{created.slice(0, 4) + ' / ' + created.slice(4, 6) + ' / ' + created.slice(6, 8)}</span>
+                                </div>
+                                <div className="post_action">
+                                    <Like id={id} status_like={status_like} like={like} />
+                                </div>
+                            </div>
+                            <div className="wZo8s">
+                                {created !== updated && <span>edited</span>}
+                                <Link to={{ pathname: `/posts/${id}/`, state: { data, from } }}>more...</Link>
+                            </div>
                         </div>
                     </div>
                 </div>

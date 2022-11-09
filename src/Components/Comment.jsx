@@ -5,7 +5,7 @@ import loading from './images/200.gif'
 import getComment, { sendComment } from '../axios/Comment';
 
 const Comment = ({ token, id }) => {
-    const [Comments, setComments] = useState()
+    const [Comments, setComments] = useState([])
     const [comment, setComment] = useState('')
     const [render, setRender] = useState(0)
     const [isFetching, setIsFetching] = useState(false)
@@ -14,7 +14,7 @@ const Comment = ({ token, id }) => {
     useEffect(() => {
         const get = async () => {
             const comment = await getComment(null, id)
-            await setComments(comment.results)
+            await setComments(comment)
             if (await comment.next === null) setEnd(!end)
         }
         get()
@@ -23,14 +23,14 @@ const Comment = ({ token, id }) => {
     }, [render])
 
     useEffect(() => {
-        if (isFetching && Comments && !end) {
+        if (isFetching && Comments.results && !end) {
             fetchMoreListItems();
         }
     }, [isFetching, Comments]);
 
     async function fetchMoreListItems() {
-        const comment = await getComment(Comments.length, id)
-        await setComments(prev => prev.concat(comment.results))
+        const comment = await getComment(Comments.results.length, id)
+        await setComments(prev => prev.results.concat(comment.results))
         if (await comment.next === null) setEnd(true)
         await setIsFetching(false)
     }
@@ -52,11 +52,11 @@ const Comment = ({ token, id }) => {
         }
     }
 
-    const comments = Comments && Comments.map(c => {
+    const comments = Comments.results && Comments.results.map(c => {
         return (
             <div className="comment" key={c.id}>
                 <div className="headerC">
-                    <Link to={`/users/${c.owner}`}>{c.owner}</Link>
+                    <Link to={`/${c.owner}`}>{c.owner}</Link>
                 </div>
                 <div className="bodyC">
                     <p>{c.body}</p>
@@ -72,7 +72,7 @@ const Comment = ({ token, id }) => {
     return (
         <>
             <div className="postComment">
-                <h5>comments</h5>
+                <h5>comments - {Comments.count}</h5>
                 <div className="commentForm">
                     <form encType='multipart/form-data'>
                         <input type="text" value={comment} onChange={(e) => setComment(e.target.value)} />

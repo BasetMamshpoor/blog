@@ -1,0 +1,131 @@
+.Fcpol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.update_form {
+  width: 100%;
+  background: #fff;
+  padding: 4em 4em 2em;
+  max-width: 400px;
+  box-shadow: 0 10px 10px -3px rgba(0, 0, 0, 0.26);
+  border-radius: 2px;
+  font-size: 10px;
+}
+.update_form h2 {
+  letter-spacing: 3px;
+  margin-bottom: 0;
+  padding: 10px;
+  text-align: center;
+  font-size: 30px;
+  color: #666;
+  border-bottom: solid 1px #e5e5e5;
+}
+.fVrxi9 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  padding: 1rem 0;
+}
+.Hbrcyls {
+  width: 155px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #adadad;
+  cursor: pointer;
+}
+.Hbrcyls img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.scfEsvg {
+  padding: 0px 5px;
+  background: #fff;
+  border-radius: 50%;
+  width: 36px;
+  height: 32px;
+  position: absolute;
+  bottom: 3px;
+  left: 45%;
+  z-index: 10;
+}
+.scfEsvg svg {
+  width: 100%;
+  height: 100%;
+}
+.mWmubF {
+  padding-bottom: 3rem;
+  position: relative;
+  width: 100%;
+}
+
+.mWmubF input[type="text"],
+.mWmubF input[type="password"] {
+  letter-spacing: 1px;
+  font-family: 'Lucida Sans', Verdana, sans-serif;
+  border-radius: 6px !important;
+  display: block;
+  width: 100%;
+  outline: none;
+  margin: 0;
+  background: #fff;
+  border: 1px solid #adadad;
+  font-size: 1.6em;
+  padding: 0.8em 0.5em;
+  border-radius: 2px;
+}
+.mWmubF input[type="text"]:focus,
+.mWmubF input[type="password"]:focus {
+  background: #fff;
+}
+.mWmubF span {
+  text-transform: capitalize;
+  position: absolute;
+  width: 100%;
+  bottom: 1.2rem;
+  border-radius: 10px;
+  font-size: 12px;
+  display: block;
+  background: #f9a5a5;
+  padding: 2px 8px;
+  color: #666;
+  font-weight: 600;
+}
+.mWmubF button[type="submit"] {
+  width: 100%;
+  background: rgb(119, 119, 255);
+  box-shadow: 0 3px 10px -3px rgb(47, 47, 70);
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: block;
+  font-size: 2em;
+  letter-spacing: 2px;
+  line-height: 1.6em;
+  outline: none;
+  padding: 0.8em 0;
+  transition: all 0.3s ease;
+}
+.mWmubF button[type="submit"]:hover {
+  background: rgb(61, 61, 240);
+  text-shadow: 0 1px 3px rgb(0, 0, 0);
+}
+
+.mWmubF label.floatLabel {
+  top: -11px;
+  letter-spacing: 2px;
+  background-color: #fff;
+  font-size: 14px;
+  position: absolute;
+  left: 15px;
+  color: #818181;
+  display: inline-block;
+  padding: 4px 10px;
+  font-weight: 400;
+}

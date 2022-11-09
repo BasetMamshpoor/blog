@@ -60,7 +60,8 @@
   flex-direction: column;
   justify-content: center;
 }
-.aboutPost p {
+.aboutPost p{
+  white-space: pre-line;
   margin: 0.5rem 0;
   text-align: justify;
 }
@@ -80,6 +81,8 @@
   padding: 0.2rem 0.5rem;
 }
 .postFooter {
+  display: flex;
+  align-items: center;
   direction: ltr !important;
   width: 100%;
 }
@@ -145,4 +148,19 @@
 .loadingComment {
   margin: 0 auto;
   width: 100px;
+}
+.post_action {
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+.Like_post {
+  cursor: pointer;
+}
+.Like_post svg {
+  width: 24px;
+  height: 24px;
+}
+.liked {
+  fill: red;
 }

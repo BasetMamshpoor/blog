@@ -14,17 +14,21 @@ const Details = () => {
     const [render, setRender] = useState(0)
 
     useEffect(() => {
-        const get = async () => {
-            if (token) {
-                const post = await fetchData(token, state.from, null, id)
-                setPost(post)
-            } else {
-                const post = await fetchData(null, state.from, null, id)
-                setPost(post)
+        if (state) {
+            setPost(state.data)
+        } else {
+            const get = async () => {
+                if (token) {
+                    const post = await fetchData(token, 'post', null, id)
+                    setPost(post)
+                } else {
+                    const post = await fetchData(null, 'explore', null, id)
+                    setPost(post)
+                }
             }
+            get()
         }
-        get()
-    }, [id, render])
+    }, [state, id, render])
 
     return (
         <>

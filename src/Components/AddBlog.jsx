@@ -80,15 +80,15 @@ const AddBlog = () => {
             setTouch({ title: true, body: true })
         } else {
             await EditPost(addPost)
-                .then(() => history.push(`/users/${localStorage.getItem('username')}`))
-                .catch(() => notify('error', 'change the title!'))
+                .then(() => history.push(`/${localStorage.getItem('username')}`))
+                .catch(() => notify('error', 'something is wrong!'))
         }
     }
     const handleFocus = (e) => {
         setTouch(prev => { return { ...prev, [e.target.name]: true } })
     }
     const handleImageOption = (e) => {
-        const { name } = e.target
+        const name = parseInt(e.target.name)
         setAddPost(prev => {
             const { images } = prev
             if (!images.includes(name)) {
@@ -118,7 +118,7 @@ const AddBlog = () => {
     return (
         <>
             {
-                <div className='wQio'>
+                <div className='wQio mb-5'>
                     <div className="tab-pane" id="post-object-form">
                         <form encType='multipart/form-data' className="form-horizontal" onSubmit={state ? handleEditPost : handleSendData}>
                             <fieldset>

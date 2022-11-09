@@ -18,13 +18,14 @@ async function EditPost(data) {
         formdata.append('image_option', images)
     }
 
-    await axios.put(`/posts/post/${id}/`, formdata, {
+    const put = await axios.put(`/posts/post/${id}/`, formdata, {
         headers:
         {
             'Content-Type': 'multipart/form-data',
             'Authorization': `Token ${token}`
         }
     })
+    return put;
 }
 async function DeletePost(id) {
     const req = await axios

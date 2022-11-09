@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import userlogo from './images/Ei-user.svg'
 import { Link } from 'react-router-dom';
 import Comment from './Comment.jsx'
+import Like from './Like';
 
 const DetailBlog = ({ post, token }) => {
     const slider = useRef()
@@ -50,12 +51,12 @@ const DetailBlog = ({ post, token }) => {
                 <div className='postAuthor'>
                     <div className='authorImg'>
                         {post.profile ?
-                                <img src={post.profile} alt='author' />
-                                :
-                                <img src={userlogo} alt='author' />
-                            }
+                            <img src={post.profile} alt='author' />
+                            :
+                            <img src={userlogo} alt='author' />
+                        }
                     </div>
-                    <Link to={`/users/${post.author}`}>{post.author}</Link>
+                    <Link to={`/${post.author}`}>{post.author}</Link>
                 </div>
                 <div className='postInfo'>
                     {post.images.length > 1 &&
@@ -82,6 +83,9 @@ const DetailBlog = ({ post, token }) => {
                         <div className="postFooter">
                             <span className='me-3'>{post.created.slice(0, 4) + ' / ' + post.created.slice(4, 6) + ' / ' + post.created.slice(6, 8)}</span>
                             <span>{post.created.slice(8, 10) + ' : ' + post.created.slice(10, 12)}</span>
+                            <div className="post_action">
+                                <Like id={post.id} status_like={post.status_like} like={post.like} />
+                            </div>
                         </div>
                     </div>
                 </div>

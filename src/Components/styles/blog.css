@@ -98,13 +98,33 @@
 .aboutBlog h4 {
   text-align: justify;
 }
-.aboutBlog p {
-  margin: 0.5rem 0;
+.Kbyci p {
+  white-space: pre-line;
   text-align: justify;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.read-more__label {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: rgb(49, 49, 131);
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 14px;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+.read-more__checkbox ~ .read-more__label::before {
+  content: attr(data-read-more);
+}
+
+.read-more__checkbox:checked ~ .read-more__label::before {
+  content: attr(data-read-less);
+}
+.read-more__checkbox:checked ~ p {
+  --line-clamp: none;
+  -webkit-line-clamp: var(--line-clamp);
 }
 .blogImg,
 .blogimg {
@@ -179,7 +199,27 @@
   font-style: italic;
   color: rgb(35, 118, 241);
 }
-.blogFooter span {
+.Ucrtl9_p {
   font-size: 12px;
   font-weight: 800;
+}
+.wZo8s span {
+  margin-right: .5rem;
+  font-weight: 600;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.post_action {
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+.Like_post {
+  cursor: pointer;
+}
+.Like_post svg {
+  width: 24px;
+  height: 24px;
+}
+.liked {
+  fill: red;
 }

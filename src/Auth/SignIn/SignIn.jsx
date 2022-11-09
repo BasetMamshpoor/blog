@@ -14,7 +14,7 @@ const SignIn = () => {
     const [showHidePass, setShowHidePass] = useState(false)
     const [showHideCpass, setShowHideCpass] = useState(false)
     const [userInfo, setUserInfo] = useState({
-        username: '', first_name: '', last_name: '', email: '', password: '', confirm_password: '', profile: { "photo": null },
+        username: '', first_name: '', last_name: '', email: '', password: '', confirm_password: '', profile_photo: null,
     })
     const [touch, setTouch] = useState({})
     const errors = error(userInfo, 'signin')
@@ -60,10 +60,11 @@ const SignIn = () => {
     return (
         <div className={styles.main}>
             <div className={styles.formSignIn}>
-                <h4>Sign In</h4>
+                <h4>Sign Up</h4>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.formInput}>
                         <input
+                            placeholder=' '
                             className={styles.input}
                             type="text"
                             name="username" id='username' onChange={handleChange} value={userInfo.username} onFocus={handleTouch} />
@@ -72,6 +73,7 @@ const SignIn = () => {
                     </div>
                     <div className={styles.formInput}>
                         <input
+                            placeholder=' '
                             className={styles.input}
                             type="text"
                             name='first_name' id='firstname' onChange={handleChange} value={userInfo.first_name} />
@@ -79,6 +81,7 @@ const SignIn = () => {
                     </div>
                     <div className={styles.formInput}>
                         <input
+                            placeholder=' '
                             className={styles.input}
                             type="text"
                             name='last_name' id='lastname' onChange={handleChange} value={userInfo.last_name} />
@@ -86,6 +89,7 @@ const SignIn = () => {
                     </div>
                     <div className={styles.formInput}>
                         <input
+                            placeholder=' '
                             className={styles.input}
                             type="email"
                             name='email' id='email' onChange={handleChange} value={userInfo.email} onFocus={handleTouch} />
@@ -95,6 +99,7 @@ const SignIn = () => {
                     </div>
                     <div className={styles.formInput}>
                         <input
+                            placeholder=' '
                             className={styles.input}
                             type={showHidePass ? 'type' : 'password'}
                             name='password' id='password' onChange={handleChange} value={userInfo.password} onFocus={handleTouch} />
@@ -105,6 +110,7 @@ const SignIn = () => {
                     </div>
                     <div className={styles.formInput}>
                         <input
+                            placeholder=' '
                             className={styles.input}
                             type={showHideCpass ? 'type' : 'password'}
                             name='confirm_password' id='confirm_password' onChange={handleChange} value={userInfo.confirm_password} onFocus={handleTouch} />
@@ -112,8 +118,18 @@ const SignIn = () => {
                         <img onClick={handleShowHide} className={styles.imgPass} src={showHideCpass ? openEye : closeEye} alt="Cshow-hide" />
                         {touch.confirm_password && errors.confirm_password && <span className={styles.error}>{errors.confirm_password}</span>}
                     </div>
+                    <div className={styles.formInputaFile}>
+                        <input
+                            hidden
+                            type="file"
+                            required
+                            name='file'
+                            id='file'
+                            onChange={({ target }) => setUserInfo(prev => { return { ...prev, profile_photo: target.files[0] } })}
+                        />
+                        <label htmlFor="file" className={styles.custom_file_input}>* Profile Image :</label>
+                    </div>
                     <button className={styles.btn} type="submit">Sign Up</button>
-
                     <Link to='/login' className={styles.signIn}>Already Have Account ?</Link>
                 </form>
             </div>

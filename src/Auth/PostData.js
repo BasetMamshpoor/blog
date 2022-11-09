@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 const postNewUser = async (info) => {
-    const { username, password, confirm_password, first_name, last_name, email, profile } = info
+    const { username, password, confirm_password, first_name, last_name, email, profile_photo } = info
     const post = await axios.post('/accounts/users/',
-        { username, password, confirm_password, first_name, last_name, email, profile },
+        { username, password, confirm_password, first_name, last_name, email, 'profile_photo': profile_photo },
         {
             headers:
-                { 'Content-Type': 'application/json' }
+                { 'Content-Type': 'multipart/form-data' }
         }).then(res => res)
         .catch(err => err)
 

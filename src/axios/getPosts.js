@@ -2,7 +2,7 @@ import axios from "axios";
 
 async function fetchData(token, path = 'post', offset = null, id = 0) {
     if (id > 0) {
-        const get = await axios.get(`/posts/explore/${id}`)
+        const get = await axios.get(`/posts/explore/${id}/`)
             .then(res => res.data)
             .catch(err => err.response.data)
         return get;

@@ -14,7 +14,7 @@ const Follow = () => {
     const [end, setEnd] = useState(false)
 
     useLayoutEffect(() => {
-        if (!state) history.push(`/users/${params.user}`)
+        if (!state) history.push(`/${params.user}`)
     }, [state, params])
 
     useEffect(() => {
@@ -53,7 +53,7 @@ const Follow = () => {
                     <div className="followImgProf">
                         <img src={userlogo} alt="" />
                     </div>
-                    <Link to={`/users/${i.user}`} >{i.user}</Link>
+                    <Link to={`/${i.user}`} >{i.user}</Link>
                 </li>
             )
         } else {
@@ -62,7 +62,7 @@ const Follow = () => {
                     <div className="followImgProf">
                         <img src={userlogo} alt="" />
                     </div>
-                    <Link to={`/users/${i.following_user_id}`} >{i.following_user_id}</Link>
+                    <Link to={`/${i.following_user_id}`} >{i.following_user_id}</Link>
                 </li>
             )
         }

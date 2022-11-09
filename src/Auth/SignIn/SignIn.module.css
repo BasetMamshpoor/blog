@@ -27,50 +27,47 @@
   flex-direction: column;
   justify-content: space-around;
 }
+.formInput:nth-child(6) {
+  padding-bottom: 1rem;
+}
 .formInput {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding-bottom: 2.8rem;
+  padding-bottom: 3rem;
 }
 .formInput label {
   position: absolute;
-  top: 0.8rem;
-  left: 0;
+  top: 1rem;
+  left: 0.5rem;
   font-weight: 600;
-  font-size: 0.9rem;
-  margin-left: 0.3rem;
+  padding: 0 5px;
+  font-size: 16px;
   font-family: "Lucida Sans Unicode", Verdana, sans-serif;
   color: #006188;
+  background: #fff;
+  transition: all 0.3s ease;
 }
 .input {
   font-family: Arial, Helvetica, sans-serif;
   letter-spacing: 1px;
   outline: none;
-  border: 1px solid #006188;
+  border: 1px solid #bebebe;
   font-size: 1.2rem;
-  padding: 0.5rem 0.5rem 0.5rem 5.8rem;
   color: #012a3a;
   border-radius: 8px;
+  padding: 15px 10px 6px;
 }
-.formInput:nth-child(1) .input {
-  padding-left: 6.5rem;
-}
-.formInput:nth-child(4) .input {
-  padding-left: 3.5rem;
-}
-.formInput:nth-child(5) .input {
-  padding-left: 5.8rem;
-  padding-right: 2.7rem;
-}
-.formInput:nth-child(6) .input {
-  padding-left: 9.7rem;
-  padding-right: 2.7rem;
+.input:focus ~ label,
+.input:not(:placeholder-shown) ~ label {
+  top: -0.7rem;
+  left: 15px;
+  font-size: 14px;
 }
 .imgPass {
   position: absolute;
   right: 10px;
-  top: 0.5rem;
+  top: 1.1rem;
   object-fit: cover;
   width: 25px;
   cursor: pointer;
@@ -106,12 +103,52 @@
   font-size: 0.9rem;
   background: rgba(255, 0, 0, 0.267);
   color: rgb(196, 4, 4);
-  padding: 0.2rem 0.5rem;
-  margin: 0 0.4rem -.3rem;
+  padding: 0rem 0.5rem;
+  margin: 0 0.4rem -0.3rem;
   width: fit-content;
   border-radius: 10px;
   position: absolute;
-  bottom: 1rem;
+  bottom: 1.5rem;
   letter-spacing: 1px;
   font-family: Tahoma, Geneva, Verdana, sans-serif;
+}
+.formInputaFile {
+  font-weight: 600;
+  padding: 0 5px;
+  font-size: 16px;
+  font-family: "Lucida Sans Unicode", Verdana, sans-serif;
+  color: #006188;
+  display: flex;
+  position: relative;
+  padding-bottom: 1rem;
+}
+.custom_file_input {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/*custom inpu file*/
+.custom_file_input::after {
+  content: "▲ Upload File";
+  color: #fff;
+  display: inline-block;
+  background: #006188;
+  padding: 10px 22px;
+  outline: none;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  font-weight: 400;
+  border-radius: 2px;
+  outline: none;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),
+    0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+.custom_file_input:focus {
+  outline: none !important;
+}
+.custom_file_input:active::before {
+  transform: scale(0.9) translate(0px, 2px);
+  box-shadow: inset 4px 4px 5px 0px rgba(0, 0, 0, 0.2);
 }
