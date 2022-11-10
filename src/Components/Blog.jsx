@@ -7,7 +7,7 @@ import Like from './Like';
 
 
 const Blog = ({ data, setBlogs, from, link = true }) => {
-    const { id, slug, author, profile, images, title, body, status, created, updated, like, status_like } = data
+    const { id, author, profile, images, title, body, status, created, updated, like, status_like } = data
     const slider = useRef();
 
 
@@ -120,7 +120,7 @@ const Blog = ({ data, setBlogs, from, link = true }) => {
                             </div>
                             <div className="wZo8s">
                                 {created !== updated && <span>edited</span>}
-                                <Link to={{ pathname: `/posts/${id}/`, state: { data, from } }}>more...</Link>
+                                <Link to={{ pathname: `/posts/${id}/`, state: { from } }}>more...</Link>
                             </div>
                         </div>
                     </div>

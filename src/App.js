@@ -19,7 +19,7 @@ function App() {
     <>
       <Navbar />
       <Switch>
-        <Route path='/:user/edit-profile' component={UpdateProfile} />
+        <Route path='/account/edit-profile' component={UpdateProfile} />
         <Route path='/:user/Blog-Option' component={AddBlog} />
         <Route path='/posts/:id/' component={Details} />
         <Route path='/:user/:follow' component={Follow} />

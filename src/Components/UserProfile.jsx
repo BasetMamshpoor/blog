@@ -71,6 +71,7 @@ const UserProfile = () => {
             return (
                 <Blog
                     key={item.id}
+                    from={'post'}
                     data={item}
                     link={false}
                 />
@@ -136,7 +137,7 @@ const UserProfile = () => {
                                         {
                                             me ?
                                                 <>
-                                                    <Link to={{ pathname: `/${user.username}/edit-profile`, state: user }}>Edit Profile</Link>
+                                                    <Link to={{ pathname: `/account/edit-profile`, state: user }}>Edit Profile</Link>
                                                     <button onClick={() => handleLogout()}>Log out</button>
                                                 </>
                                                 :

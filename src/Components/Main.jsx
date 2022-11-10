@@ -3,7 +3,9 @@ import { useHistory } from 'react-router-dom';
 import './styles/main.css'
 import Blog from './Blog';
 import loading from './images/200.gif'
-import fetchData from '../axios/getPosts'
+import getPost from '../axios/getPost'
+import { ToastContainer } from 'react-toastify';
+
 
 const Main = ({ type }) => {
     const token = localStorage.getItem('token')
@@ -12,20 +14,14 @@ const Main = ({ type }) => {
     const [isFetching, setIsFetching] = useState(false)
     const [end, setEnd] = useState(false)
     useLayoutEffect(() => {
-        if (type === 'post' && !token) history.push('/login')
+        if (type === 'post' && !token) history.push('/explore')
     }, [token])
 
     useEffect(() => {
         const get = async () => {
-            if (token) {
-                const post = await fetchData(token, type);
-                setPosts(post.results)
-                if (post.next === null) setEnd(!end)
-            } else {
-                const post = await fetchData(null, type);
-                setPosts(post.results)
-                if (post.next === null) setEnd(!end)
-            }
+            const post = await getPost(token, type);
+            setPosts(post.results)
+            if (post.next === null) setEnd(!end)
         }
         get()
         window.addEventListener('scroll', handleScroll)
@@ -39,7 +35,7 @@ const Main = ({ type }) => {
     }, [isFetching, Posts]);
 
     async function fetchMoreListItems() {
-        const post = await fetchData(token, type, Posts.length)
+        const post = await getPost(token, type, Posts.length)
         await setPosts(prev => prev.concat(post.results))
         if (await post.next === null) setEnd(true)
         await setIsFetching(false);
@@ -70,6 +66,7 @@ const Main = ({ type }) => {
                         </main>
                         {isFetching && !end && <div className='loading'><img src={loading} alt='loading' /></div>}
                     </div>
+                    <ToastContainer />
                 </div>
             }
         </>

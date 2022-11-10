@@ -28,7 +28,7 @@
   justify-content: space-around;
 }
 .formInput:nth-child(6) {
-  padding-bottom: 1rem;
+  padding-bottom: 2rem;
 }
 .formInput {
   position: relative;
@@ -108,7 +108,7 @@
   width: fit-content;
   border-radius: 10px;
   position: absolute;
-  bottom: 1.5rem;
+  top: 3.8rem;
   letter-spacing: 1px;
   font-family: Tahoma, Geneva, Verdana, sans-serif;
 }

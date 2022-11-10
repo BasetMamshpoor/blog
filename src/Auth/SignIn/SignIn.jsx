@@ -122,7 +122,6 @@ const SignIn = () => {
                         <input
                             hidden
                             type="file"
-                            required
                             name='file'
                             id='file'
                             onChange={({ target }) => setUserInfo(prev => { return { ...prev, profile_photo: target.files[0] } })}

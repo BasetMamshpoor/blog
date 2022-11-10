@@ -1,6 +1,6 @@
 import React, { useRef, useLayoutEffect, useEffect, useState } from 'react';
 import './styles/updateprofile.css'
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import newUser from '../axios/newUser';
 import axios from 'axios'
 
@@ -8,7 +8,7 @@ const UpdateProfile = () => {
     const token = localStorage.getItem('token')
     const { state } = useLocation();
     const history = useHistory();
-    const { user } = useParams();
+    const user = localStorage.getItem('username')
     const imgPreview = useRef();
     const [userInfo, setUserInfo] = useState()
 

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
+import notify from '../Auth/toast'
+
 
 const Like = ({ id, status_like, like }) => {
     const [liked, setLiked] = useState(null)
@@ -16,12 +18,13 @@ const Like = ({ id, status_like, like }) => {
             if (liked > 0) {
                 axios.delete(`posts/like/${liked}/`, { headers: { 'Authorization': `Token ${token}` } }).then(() => {
                     setCountLike(prev => prev - 1)
-                }).then(() => setLiked(0))
+                    setLiked(0)
+                }).catch(() => notify('error', 'please Login !'))
             } else {
                 axios.post(`posts/like/`, { "post": id }, { headers: { 'Authorization': `Token ${token}` } }).then(res => {
                     setCountLike(prev => prev + 1)
                     setLiked(res.data.id)
-                })
+                }).catch(() => notify('error', 'please Login !'))
             }
         } else {
             if (liked) {
