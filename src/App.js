@@ -20,7 +20,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route path='/account/edit-profile' component={UpdateProfile} />
-        <Route path='/:user/Blog-Option' component={AddBlog} />
+        <Route path='/account/Blog-Option' component={AddBlog} />
         <Route path='/posts/:id/' component={Details} />
         <Route path='/:user/:follow' component={Follow} />
         <Route path='/explore' component={() => <Main type='explore' />} />

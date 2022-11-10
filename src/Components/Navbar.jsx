@@ -17,7 +17,7 @@ const Navbar = () => {
                     <nav className='navBar'>
                         <ul className="d-flex ">
                             {token && <><li><Link to='/'>Home</Link></li>
-                                <li><Link to={`/${username}/Blog-Option`}>Add Post</Link></li></>}
+                                <li><Link to={`/account/Blog-Option`}>Add Post</Link></li></>}
                             <li><Link to='/explore'>Explore</Link></li>
                             <li><Link to={token ? `/${username}` : '/login'}>{token ? "Profile" : 'Log in'}</Link></li>
                         </ul>

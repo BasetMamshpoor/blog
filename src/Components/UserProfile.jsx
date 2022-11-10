@@ -156,7 +156,7 @@ const UserProfile = () => {
                                 {isFetching && !end && <div className='loading'><img src={Loading} alt='loading' /></div>}
                             </div>
                         </>
-                        : <UserNotFound />
+                        : <UserNotFound value='User' />
                     }
                 </div>
             </div>

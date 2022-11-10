@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './NotFound.module.css'
 
-const NotFound = () => {
+const NotFound = ({ value }) => {
     return (
         <div className={styles.notFound}>
-            <h1 className={styles.text}>sorry this page dosen't exist.</h1>
+            <h1 className={styles.text}>sorry this {value} dosen't exist.</h1>
         </div>
     );
 };

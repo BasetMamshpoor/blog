@@ -11,10 +11,7 @@ async function getPost(token, path = 'post', offset, id) {
             return get;
         } else {
             if (id > 0) {
-                const get = await axios.get(`/posts/${path}/${id}/`, { headers: { 'Authorization': `Token ${token}` } })
-                    .then(res => res.data)
-                    .catch(err => err.response.data)
-                return get;
+                return await axios.get(`/posts/${path}/${id}/`, { headers: { 'Authorization': `Token ${token}` } })
             }
             const get = await axios.get(`/posts/${path}/`, { headers: { 'Authorization': `Token ${token}` } })
                 .then(res => res.data)
@@ -29,10 +26,7 @@ async function getPost(token, path = 'post', offset, id) {
             return get;
         } else {
             if (id > 0) {
-                const get = await axios.get(`/posts/explore/${id}/`)
-                    .then(res => res.data)
-                    .catch(err => err.response.data)
-                return get;
+                return await axios.get(`/posts/explore/${id}/`)
             }
             const get = await axios.get(`/posts/explore/`)
                 .then(res => res.data)

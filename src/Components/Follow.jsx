@@ -18,12 +18,14 @@ const Follow = () => {
     }, [state, params])
 
     useEffect(() => {
-        const get = async () => {
-            const followUser = await getFollow(params.follow, state.id)
-            await setFollow(followUser.results)
-            if (await followUser.next === null) setEnd(!end)
+        if (state) {
+            const get = async () => {
+                const followUser = await getFollow(params.follow, state.id)
+                await setFollow(followUser.results)
+                if (await followUser.next === null) setEnd(!end)
+            }
+            get()
         }
-        get()
         List.current.addEventListener('scroll', handleScroll)
     }, [history])
 

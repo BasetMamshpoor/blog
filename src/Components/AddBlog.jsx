@@ -122,14 +122,14 @@ const AddBlog = () => {
                     <div className="tab-pane" id="post-object-form">
                         <form encType='multipart/form-data' className="form-horizontal" onSubmit={state ? handleEditPost : handleSendData}>
                             <fieldset>
-                                <div className="form-group ">
+                                <div className="form-group">
                                     <label className="control-label">Title</label>
-                                    <input name="title" className="form-control" type="text" value={addPost.title} onFocus={handleFocus} onChange={handleChange} />
+                                    <input dir='auto' name="title" className="form-control" type="text" value={addPost.title} onFocus={handleFocus} onChange={handleChange} />
                                     {touch.title && error.title && <p>{error.title}</p>}
                                 </div>
                                 <div className="form-group">
                                     <label className="control-label">Body</label>
-                                    <textarea name="body" value={addPost.body} onFocus={handleFocus} onChange={handleChange} className="form-control"></textarea>
+                                    <textarea dir='auto' name="body" value={addPost.body} onFocus={handleFocus} onChange={handleChange} className="form-control"></textarea>
                                     {touch.body && error.body && <p>{error.body}</p>}
                                 </div>
                                 {state && state.images.length > 0 &&
