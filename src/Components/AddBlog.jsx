@@ -6,7 +6,6 @@ import { ToastContainer } from 'react-toastify';
 import notify from '../Auth/toast'
 import { useHistory, useLocation } from 'react-router-dom';
 
-
 const validate = (obj) => {
     const error = {}
     if (!obj.title.trim()) {
@@ -46,21 +45,55 @@ const AddBlog = () => {
         }
     }, [state])
 
+    useEffect(() => {
+        window.addEventListener('click', handleRemove)
+        return () => window.removeEventListener('click', handleRemove)
+    }, [addPost.uplouded_images])
 
+    const handleMultipleImage = e => {
+        const imgArray = [];
+        const fileArry = e.target.parentElement.parentElement.parentElement.children[1]
+        for (const file of e.target.files) {
+            imgArray.push(file);
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.addEventListener('load', function () {
+                let html = `
+                <div class='upload__img-box' data-file='${file.name}'>
+                    <img src='${this.result}' />
+                    <div class='upload__img-close'></div>
+                </div>`;
+                fileArry.innerHTML += html
+            })
+        }
+        setAddPost(prev => {
+            return {
+                ...prev,
+                uplouded_images: [...prev.uplouded_images, ...imgArray]
+            }
+        })
+    }
+    function handleRemove(e) {
+        if (e.target.className === 'upload__img-close') {
+            const el = e.target.parentElement
+            const file = el.getAttribute('data-file')
+            for (const i of addPost.uplouded_images) {
+                if (i.name === file) {
+                    setAddPost(prev => {
+                        prev.uplouded_images.splice(i, 1)
+                        return { ...prev }
+                    })
+                    break;
+                }
+            }
+            el.remove();
+        }
+    }
     const handleChange = event => {
         setAddPost(prev => {
             return {
                 ...prev,
                 [event.target.name]: event.target.value
-            }
-        })
-
-    }
-    const handleUpload = ({ target }) => {
-        setAddPost(prev => {
-            return {
-                ...prev,
-                uplouded_images: [...prev.uplouded_images, ...target.files]
             }
         })
     }
@@ -117,55 +150,61 @@ const AddBlog = () => {
     })
     return (
         <>
-            {
-                <div className='wQio mb-5'>
-                    <div className="tab-pane" id="post-object-form">
-                        <form encType='multipart/form-data' className="form-horizontal" onSubmit={state ? handleEditPost : handleSendData}>
-                            <fieldset>
+            <div className='wQio mb-5'>
+                <div className="tab-pane" id="post-object-form">
+                    <form encType='multipart/form-data' className="form-horizontal" onSubmit={state ? handleEditPost : handleSendData}>
+                        <fieldset>
+                            <div className="form-group">
+                                <label className="control-label">Title</label>
+                                <input dir='auto' name="title" className="form-control" type="text" value={addPost.title} onFocus={handleFocus} onChange={handleChange} />
+                                {touch.title && error.title && <span>{error.title}</span>}
+                            </div>
+                            <div className="form-group">
+                                <label className="control-label">Body</label>
+                                <textarea dir='auto' name="body" value={addPost.body} onFocus={handleFocus} onChange={handleChange} className="form-control"></textarea>
+                                {touch.body && error.body && <span>{error.body}</span>}
+                            </div>
+                            {state && state.images.length > 0 &&
                                 <div className="form-group">
-                                    <label className="control-label">Title</label>
-                                    <input dir='auto' name="title" className="form-control" type="text" value={addPost.title} onFocus={handleFocus} onChange={handleChange} />
-                                    {touch.title && error.title && <p>{error.title}</p>}
-                                </div>
-                                <div className="form-group">
-                                    <label className="control-label">Body</label>
-                                    <textarea dir='auto' name="body" value={addPost.body} onFocus={handleFocus} onChange={handleChange} className="form-control"></textarea>
-                                    {touch.body && error.body && <p>{error.body}</p>}
-                                </div>
-                                {state && state.images.length > 0 &&
-                                    <div className="form-group">
-                                        <label className="control-label">select image to delete!</label>
-                                        <div className="OvrcU d-flex">
-                                            {ImageList}
-                                        </div>
+                                    <label className="control-label">select image to delete!</label>
+                                    <div className="OvrcU d-flex">
+                                        {ImageList}
                                     </div>
+                                </div>
+                            }
+                            <div className="form-group">
+                                <div className="upload__box">
+                                    <div className="upload__btn-box">
+                                        <label className="upload__btn">
+                                            <p>Upload images</p>
+                                            <input onChange={handleMultipleImage} type="file" multiple className="upload__inputfile" accept='image/jpeg, image/jpg, image/png, image/gif, image/webp' hidden />
+                                        </label>
+                                    </div>
+                                    <div className="upload__img-wrap"></div>
+                                </div>
+                                {/*<label htmlFor='input_image_post' className="control-label input_image_post">{state ? 'add new image' : 'images'}</label>
+                                <input id='input_image_post' name="uplouded_images" multiple type="file" onChange={handleUpload} accept='image/jpeg, image/jpg, image/png, image/gif, image/webp' hidden /> */}
+                            </div>
+                            <div className="form-group">
+                                <label className="control-label ">Status</label>
+                                <select className="form-control" name="status" value={addPost.status} onChange={handleChange}>
+                                    <option value="PU">Publish</option>
+                                    {/* <option value="DR">Draft</option> */}
+                                    {/* <option value="AR">Archive</option> */}
+                                </select>
+                            </div>
+                            <div className="form-actions">
+                                {state ?
+                                    <button type='submit' className="js-tooltip">EDIT</button>
+                                    :
+                                    <button type='submit' className="js-tooltip">POST</button>
                                 }
-                                <div className="form-group">
-                                    <label className="control-label">{state ? 'add new image' : 'images'}</label>
-                                    <br />
-                                    <input name="uplouded_images" multiple type="file" onChange={handleUpload} accept='image/jpeg, image/jpg, image/png, image/gif, image/webp' />
-                                </div>
-                                <div className="form-group">
-                                    <label className="control-label ">Status</label>
-                                    <select className="form-control" name="status" value={addPost.status} onChange={handleChange}>
-                                        <option value="PU">Publish</option>
-                                        {/* <option value="DR">Draft</option> */}
-                                        {/* <option value="AR">Archive</option> */}
-                                    </select>
-                                </div>
-                                <div className="form-actions">
-                                    {state ?
-                                        <button type='submit' className="js-tooltip">EDIT</button>
-                                        :
-                                        <button type='submit' className="js-tooltip">POST</button>
-                                    }
-                                    <button type="button" className='closeModal' onClick={() => history.goBack()}>CANCLE</button>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
+                                <button type="button" className='closeModal' onClick={() => history.goBack()}>CANCLE</button>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
-            }
+            </div>
             <ToastContainer />
         </>
     );
