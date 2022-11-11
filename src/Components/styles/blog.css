@@ -30,28 +30,12 @@
   position: relative;
   height: 100%;
 }
-.phWxoR label {
-  padding: 0 1rem;
-}
 .XsPzoY {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
   cursor: pointer;
 }
-.XsPzoY span {
-  width: 4px;
-  border-radius: 10px;
-  height: 4px;
-  background: #000;
-}
-.XsPzoY span:first-child {
-  margin-bottom: 5px;
-}
-.XsPzoY span:last-child {
-  margin-top: 5px;
+.XsPzoY svg {
+  width: 24px;
+  height: 24px;
 }
 .phWxoR input[type="checkbox"]:checked ~ .jWcoI {
   display: block;
@@ -108,7 +92,8 @@
   overflow: hidden;
 }
 .read-more__label {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
   color: rgb(49, 49, 131);
   cursor: pointer;
   font-weight: 900;
@@ -205,9 +190,9 @@
   font-weight: 800;
 }
 .wZo8s span {
-  margin-right: .5rem;
+  margin-right: 0.5rem;
   font-weight: 600;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 .post_action {
   margin-left: 1rem;

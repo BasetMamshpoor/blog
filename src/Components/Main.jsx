@@ -56,7 +56,7 @@ const Main = ({ type }) => {
                     data={item}
                     setBlogs={setBlogs}
                     from={type}
-                    link={false}
+                    link={true}
                 />
             )
         } else {
@@ -64,9 +64,8 @@ const Main = ({ type }) => {
                 <Blog
                     key={item.id}
                     data={item}
-                    link={false}
+                    link={true}
                     from={type}
-
                 />
             )
         }

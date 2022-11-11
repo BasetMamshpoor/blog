@@ -1,3 +1,9 @@
+.loading_holder {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
 .post {
   display: flex;
   flex-direction: column;
@@ -6,11 +12,13 @@
   margin-bottom: 3rem;
 }
 .postAuthor {
+  padding: 1rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid black;
 }
-.postAuthor a {
+.pmibgt {
   color: #000;
   text-decoration: none;
   margin-left: 1rem;
@@ -53,14 +61,19 @@
   border-radius: 3px 0 0 3px;
 }
 
-
+.edited {
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-style: italic;
+  font-size: 16px;
+}
 .aboutPost {
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.aboutPost p{
+.aboutPost p {
   white-space: pre-line;
   margin: 0.5rem 0;
   text-align: justify;
@@ -127,7 +140,7 @@
   border: none;
   background: #000;
   font-size: 1.1rem;
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
   padding: 0.5rem 1rem;
   color: #fff;
 }
@@ -139,7 +152,7 @@
   text-align: justify;
 }
 .csxop {
-  margin: 1rem 0 .3rem;
+  margin: 1rem 0 0.3rem;
   font-size: 12px;
   font-weight: 800;
 }

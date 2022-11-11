@@ -113,7 +113,7 @@ const AddBlog = () => {
             setTouch({ title: true, body: true })
         } else {
             await EditPost(addPost)
-                .then(() => history.push(`/${localStorage.getItem('username')}`))
+                .then(() => history.goBack())
                 .catch(() => notify('error', 'something is wrong!'))
         }
     }

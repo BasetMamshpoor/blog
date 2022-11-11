@@ -35,7 +35,8 @@ const UserProfile = () => {
                     setLoading(false)
                     setUser(data)
                     setBlogs(data.post_set)
-                    if (data.post_set.length < 1) setEnd(!end)
+                    if (data.post_set.length < 1) setEnd(true)
+                    else setEnd(false)
                 }).catch(() => {
                     setLoading(false)
                     setUser(false)
@@ -43,9 +44,12 @@ const UserProfile = () => {
             }
             findUser();
         }
+    }, [params, render])
+
+    useEffect(() => {
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [params, render])
+    }, [])
 
     useEffect(() => {
         if (isFetching && blogs && !end) {
@@ -61,7 +65,8 @@ const UserProfile = () => {
 
     async function fetchMoreListItems() {
         const user = await newUser(userName, token, Math.ceil(blogs.length / 5) + 1)
-        if (await user.post_set.length < 1) setEnd(!end)
+        if (await user.post_set.length < 1) setEnd(true)
+        else setEnd(false)
         await setBlogs(prev => prev.concat(user.post_set))
         await setIsFetching(false)
     }
@@ -80,7 +85,7 @@ const UserProfile = () => {
             return (
                 <Blog
                     key={item.id}
-                    from={'post'}
+                    from={user.status_follow ? 'post' : 'explore'}
                     data={item}
                     link={false}
                 />

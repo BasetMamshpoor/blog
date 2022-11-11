@@ -70,9 +70,9 @@ const Blog = ({ data, setBlogs, from, link = true }) => {
                         <div className="phWxoR">
                             <input type="checkbox" id={`optionBlog${id}`} hidden />
                             <label htmlFor={`optionBlog${id}`} className="XsPzoY">
-                                <span></span>
-                                <span></span>
-                                <span></span>
+                                <svg viewBox="0 0 16 16">
+                                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                </svg>
                             </label>
                             <div className="jWcoI">
                                 <ul>
