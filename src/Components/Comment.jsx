@@ -14,23 +14,27 @@ const Comment = ({ token, id }) => {
     useEffect(() => {
         const get = async () => {
             const comment = await getComment(null, id)
-            await setComments(comment)
-            if (await comment.next === null) setEnd(!end)
+            await setComments(comment.results)
+            if (await comment.next === null) setEnd(true)
+            else setEnd(false)
         }
         get()
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll);
     }, [render])
 
     useEffect(() => {
-        if (isFetching && Comments.results && !end) {
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [])
+
+    useEffect(() => {
+        if (isFetching && Comments && !end) {
             fetchMoreListItems();
         }
-    }, [isFetching, Comments]);
+    }, [isFetching, Comments, end]);
 
     async function fetchMoreListItems() {
-        const comment = await getComment(Comments.results.length, id)
-        await setComments(prev => prev.results.concat(comment.results))
+        const comment = await getComment(Comments.length, id)
+        await setComments(prev => prev.concat(comment.results))
         if (await comment.next === null) setEnd(true)
         await setIsFetching(false)
     }
@@ -52,7 +56,7 @@ const Comment = ({ token, id }) => {
         }
     }
 
-    const comments = Comments.results && Comments.results.map(c => {
+    const comments = Comments && Comments.map(c => {
         return (
             <div className="comment" key={c.id}>
                 <div className="headerC">
@@ -72,7 +76,7 @@ const Comment = ({ token, id }) => {
     return (
         <>
             <div className="postComment">
-                <h5>comments - {Comments.count}</h5>
+                <h5>comments - {Comments.length}</h5>
                 <div className="commentForm">
                     <form encType='multipart/form-data'>
                         <input type="text" value={comment} onChange={(e) => setComment(e.target.value)} />

@@ -35,7 +35,6 @@
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid #adadad;
-  cursor: pointer;
 }
 .Hbrcyls img {
   width: 100%;
@@ -62,11 +61,53 @@
   position: relative;
   width: 100%;
 }
+.QzoliOption {
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  z-index: 20;
+}
+.QzoliOption svg {
+  width: 26px;
+  height: 26px;
+}
+.modalOption {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  left: 1.4rem;
+  z-index: 1;
+  top: 1rem;
+  list-style: none;
+  border: 1px solid #eee;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  border-radius: 5px;
+}
+.modalOption li {
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.modalOption li label {
+  padding: 8px 5px;
+  cursor: pointer;
+  width: 100%;
+  display: block;
+}
+.modalOption li:hover {
+  background: #eee;
+}
+#QzoliOption:checked ~ .modalOption {
+  display: flex;
+}
 
 .mWmubF input[type="text"],
 .mWmubF input[type="password"] {
   letter-spacing: 1px;
-  font-family: 'Lucida Sans', Verdana, sans-serif;
+  font-family: "Lucida Sans", Verdana, sans-serif;
   border-radius: 6px !important;
   display: block;
   width: 100%;
@@ -118,7 +159,7 @@
 }
 
 .mWmubF label.floatLabel {
-  top: -11px;
+  top: -14px;
   letter-spacing: 2px;
   background-color: #fff;
   font-size: 14px;
@@ -128,4 +169,8 @@
   display: inline-block;
   padding: 4px 10px;
   font-weight: 400;
+}
+.loader {
+  margin: 0 auto;
+  display: block;
 }

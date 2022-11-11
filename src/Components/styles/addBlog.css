@@ -53,13 +53,12 @@
   margin: 0;
 }
 .OvrcU {
-  align-items: center;
-  flex-wrap: wrap;
-  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
 }
 .ExBt_2 {
-  flex: 1 1 50%;
-  padding: 0.5rem;
+  position: relative;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
@@ -69,11 +68,8 @@
 }
 .image_holder {
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-  position: relative;
+  height: 120px;
+  width: 100%;
 }
 .image_holder::after {
   display: none;
@@ -85,12 +81,12 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(154, 154, 252, 0.247);
+  background: rgba(133, 43, 43, 0.288);
 }
 .image_holder img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 textarea[class="form-control"] {
   height: 10rem;

@@ -96,7 +96,8 @@
   justify-content: center;
 }
 .aboutBlog h4 {
-  text-align: justify;
+  overflow: hidden;
+  font-weight: 500;
 }
 .Kbyci p {
   white-space: pre-line;

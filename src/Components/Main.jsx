@@ -10,7 +10,7 @@ import { ToastContainer } from 'react-toastify';
 const Main = ({ type }) => {
     const token = localStorage.getItem('token')
     const history = useHistory()
-    const [Posts, setPosts] = useState()
+    const [blogs, setBlogs] = useState()
     const [isFetching, setIsFetching] = useState(false)
     const [end, setEnd] = useState(false)
     useLayoutEffect(() => {
@@ -20,8 +20,9 @@ const Main = ({ type }) => {
     useEffect(() => {
         const get = async () => {
             const post = await getPost(token, type);
-            setPosts(post.results)
-            if (post.next === null) setEnd(!end)
+            setBlogs(post.results)
+            if (post.next === null) setEnd(true)
+            else setEnd(false)
         }
         get()
         window.addEventListener('scroll', handleScroll)
@@ -29,14 +30,14 @@ const Main = ({ type }) => {
     }, [history])
 
     useEffect(() => {
-        if (isFetching && Posts && !end) {
+        if (isFetching && blogs && !end) {
             fetchMoreListItems();
         }
-    }, [isFetching, Posts]);
+    }, [isFetching, blogs]);
 
     async function fetchMoreListItems() {
-        const post = await getPost(token, type, Posts.length)
-        await setPosts(prev => prev.concat(post.results))
+        const post = await getPost(token, type, blogs.length)
+        await setBlogs(prev => prev.concat(post.results))
         if (await post.next === null) setEnd(true)
         await setIsFetching(false);
     }
@@ -47,18 +48,33 @@ const Main = ({ type }) => {
         }
     }
 
-    const Blogs = Posts && Posts.map(item => {
-        return (
-            <Blog
-                key={item.id}
-                from={type}
-                data={item} />
-        )
+    const Blogs = blogs && blogs.map(item => {
+        if (item.author === localStorage.getItem('username')) {
+            return (
+                <Blog
+                    key={item.id}
+                    data={item}
+                    setBlogs={setBlogs}
+                    from={type}
+                    link={false}
+                />
+            )
+        } else {
+            return (
+                <Blog
+                    key={item.id}
+                    data={item}
+                    link={false}
+                    from={type}
+
+                />
+            )
+        }
     })
 
     return (
         <>
-            {Posts &&
+            {blogs &&
                 <div className='main'>
                     <div className='container'>
                         <main className='blogs d-flex flex-column'>

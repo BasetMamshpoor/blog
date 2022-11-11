@@ -67,12 +67,12 @@ const UserProfile = () => {
     }
 
     const Blogs = blogs && blogs.map(item => {
-        if (!me) {
+        if (me) {
             return (
                 <Blog
                     key={item.id}
-                    from={'post'}
                     data={item}
+                    setBlogs={setBlogs}
                     link={false}
                 />
             )
@@ -80,8 +80,8 @@ const UserProfile = () => {
             return (
                 <Blog
                     key={item.id}
+                    from={'post'}
                     data={item}
-                    setBlogs={setBlogs}
                     link={false}
                 />
             )

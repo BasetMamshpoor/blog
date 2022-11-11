@@ -143,7 +143,7 @@ const AddBlog = () => {
                     onChange={handleImageOption}
                 />
                 <label htmlFor={`image${i.id}`} className="image_holder">
-                    <img src={i.image} alt="imagePost" width='100%' />
+                    <img src={i.image} alt="imagePost" />
                 </label>
             </div>
         )
@@ -167,7 +167,7 @@ const AddBlog = () => {
                             {state && state.images.length > 0 &&
                                 <div className="form-group">
                                     <label className="control-label">select image to delete!</label>
-                                    <div className="OvrcU d-flex">
+                                    <div className="OvrcU">
                                         {ImageList}
                                     </div>
                                 </div>
@@ -182,8 +182,6 @@ const AddBlog = () => {
                                     </div>
                                     <div className="upload__img-wrap"></div>
                                 </div>
-                                {/*<label htmlFor='input_image_post' className="control-label input_image_post">{state ? 'add new image' : 'images'}</label>
-                                <input id='input_image_post' name="uplouded_images" multiple type="file" onChange={handleUpload} accept='image/jpeg, image/jpg, image/png, image/gif, image/webp' hidden /> */}
                             </div>
                             <div className="form-group">
                                 <label className="control-label ">Status</label>

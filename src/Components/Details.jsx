@@ -12,7 +12,6 @@ const Details = () => {
     const { state = {} } = useLocation();
     const { id } = useParams();
     const [post, setPost] = useState()
-    const [render, setRender] = useState(0)
 
     useEffect(() => {
         const get = async () => {
@@ -21,14 +20,14 @@ const Details = () => {
                 .catch(() => setPost(false))
         }
         get()
-    }, [id, render])
+    }, [id])
 
     return (
         <>
             {post ?
                 <div className='details'>
                     <div className="container">
-                        <DetailBlog post={post} setRender={setRender} token={token} />
+                        <DetailBlog post={post} token={token} />
                     </div>
                     <ToastContainer />
                 </div>

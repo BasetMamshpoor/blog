@@ -1,6 +1,7 @@
 .prVk {
   border: 3px solid rgb(68, 146, 192);
-  top: 5rem;
+  z-index: 1010;
+  top: 8rem;
 }
 .gCte {
   flex-direction: column;
